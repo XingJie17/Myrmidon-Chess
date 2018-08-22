@@ -1,4 +1,4 @@
-package myrmidonChess;
+//package MyrmidonChess;
 
 import java.awt.*;
 import javax.swing.*;
@@ -37,6 +37,8 @@ public class GUI {
 		JSplitPane splitPane = new JSplitPane();
 		frame.getContentPane().add(splitPane);
 		
+		// Adjust splitPane;
+		splitPane.setResizeWeight(0.8);
 		// Insert chess board panel to the left of split pane
 		splitPane.setLeftComponent(Board.insertPanel());
 		
