@@ -1,4 +1,4 @@
-package myrmidonChess;
+//package MyrmidonChess;
 
 import java.awt.*;
 import javax.swing.*;
@@ -34,7 +34,7 @@ public final class Board extends JPanel {
 		
 		// create grid layout on the chess board
 		board.setLayout(new GridLayout(ROWS, COLUMNS, 1, 1));
-		
+		board.setSize(200,200);
 		// assign color to each grid
 		for (int r = 0; r < ROWS; r++) {
 			for (int c = 0; c < COLUMNS;  c++) {
