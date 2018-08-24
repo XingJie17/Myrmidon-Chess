@@ -62,9 +62,6 @@ public final class Board extends JPanel{
 					g.setBackground(Color.BLACK);
 				}
 				grid[r][c] = g; 
-				/*grid[r][c].setX(r);
-				grid[r][c].setY(c);*/
-				//grid[r][c].addActionListener(new onClick());
 			}
 		}
 		
@@ -96,26 +93,5 @@ public final class Board extends JPanel{
 		grid[5][5].setIcon(loadImage("RedTriangle.png"));
 		grid[0][1].setIcon(loadImage("BlueTriangle.png"));
 		grid[0][5].setIcon(loadImage("BlueTriangle.png"));
-
-		//pieceManager[5][1].showMove(5,1);
-		//System.out.println(pieceManager[5][1].getClass());
-	}
-
-	/*private void onClick(int r, int c){
-
-	}*/
-}
-
-class onClick implements ActionListener{
-	public void actionPerformed(ActionEvent avt){
-		String temp = avt.getActionCommand();
-		int row = Integer.parseInt(temp.substring(0,1));
-		int col = Integer.parseInt(temp.substring(2));
-		//String pieceObj = 
-		//pieceManager[row][col].showMove(row,col);
-		/*
-		System.out.println("button pose: ["+temp+"]");
-		System.out.println("row = " + row);
-		System.out.println("col = " + col+"\n");*/
 	}
 }
