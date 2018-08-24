@@ -11,7 +11,7 @@ import java.awt.GridLayout;
 
 /*** Written by Yoong Shen Wei ***/
 @SuppressWarnings("serial")
-public final class Board extends JPanel {
+public final class Board extends JPanel{
 	
 	/** Singleton Implementation **/
 	// Create STATIC instance for this class - SINGLETON
@@ -29,6 +29,8 @@ public final class Board extends JPanel {
 	private static final int ROWS = 6;
 	private static final int COLUMNS = 7;
 	private static JButton[][] grid = new JButton[ROWS][COLUMNS];
+	private static Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
+	private static PieceFactory pieceFactory = new PieceFactory();
 	
 	public static JPanel insertPanel() {
 		
@@ -57,7 +59,28 @@ public final class Board extends JPanel {
 			}
 		}
 		
+		initialPosition();
 		return board;
 	}
-	
+	private static ImageIcon loadImage(String path){
+        Image image = new ImageIcon(Board.class.getResource(path)).getImage();
+        Image scaledImage = image.getScaledInstance(132, 132,  java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImage);
+	}	
+	private static void initialPosition(){
+		/*for(int i = 0; i < 14; i++){
+			pieceManager[i] = new Piece();
+		}*/
+		pieceManager[5][1] = pieceFactory.createPiece("Triangle","Red");
+		pieceManager[5][5] = pieceFactory.createPiece("Triangle","Red");
+		
+		
+		grid[5][1].setIcon(loadImage("RedTriangle.png"));
+		grid[5][5].setIcon(loadImage("RedTriangle.png"));
+		grid[0][1].setIcon(loadImage("BlueTriangle.png"));
+		grid[0][5].setIcon(loadImage("BlueTriangle.png"));
+
+		pieceManager[5][1].showMove(5,1);
+		System.out.println(pieceManager[5][1].getClass());
+	}
 }
