@@ -1,18 +1,14 @@
+import java.util.ArrayList;
 public abstract class Piece{
-    private String name;
-    private String color;
+    //private String type;
+    //private String color;
 
-    public String getName(){return name;}
-    public void setName(String newName){name = newName;}
-    public String getColor (){return color;}
-    public void setColor(String newColor){color = newColor;}
+    public abstract String getType();
+    public abstract void setType(String type);
+    public abstract String getColor();
+    public abstract void setColor(String color);
 
 
-    public void isClicked(){
-        System.out.println(this.getName() + " is clicked");
-    }
-    public void showMove(int x, int y){
-	    System.out.println("X = "+x+"\nY = "+y);
-    }
+    public abstract ArrayList<Integer> showMove(int r, int c);
 
 }

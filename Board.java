@@ -2,6 +2,8 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import java.awt.GridLayout;
 
@@ -48,10 +50,17 @@ public final class Board extends JPanel{
 				g.addActionListener(new ActionListener()
 				{
 				    public void actionPerformed(ActionEvent e){
+						resetBoardColor();
 						String temp = g.getActionCommand();
 						int row = Integer.parseInt(temp.substring(0,1));
 						int col = Integer.parseInt(temp.substring(2));
-						pieceManager[row][col].showMove(row,col);
+						ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
+						availableBtn = pieceManager[row][col].showMove(row,col);
+						System.out.println("Size: "+availableBtn.size());
+						for(int i = 0; i < availableBtn.size(); i++){
+							grid[availableBtn.get(i)][availableBtn.get(++i)].setBackground(Color.GREEN);
+						}
+						System.out.println();
     				}
 				});
 				if ((c % 2 == 1 && r % 2 == 1) || (c % 2 == 0 && r % 2 == 0)) {
@@ -93,5 +102,18 @@ public final class Board extends JPanel{
 		grid[5][5].setIcon(loadImage("RedTriangle.png"));
 		grid[0][1].setIcon(loadImage("BlueTriangle.png"));
 		grid[0][5].setIcon(loadImage("BlueTriangle.png"));
+	}
+	private static void resetBoardColor(){
+		for (int r = 0; r < ROWS; r++) {
+			for (int c = 0; c < COLUMNS;  c++) {
+				if ((c % 2 == 1 && r % 2 == 1) || (c % 2 == 0 && r % 2 == 0)) {
+					grid[r][c].setBackground(Color.WHITE);
+				}
+				else {
+					grid[r][c].setBackground(Color.BLACK);
+				}
+			}
+		}
+	
 	}
 }
