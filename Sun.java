@@ -39,6 +39,7 @@ public class Sun extends Piece
 	{
 		ArrayList<Integer> a = new ArrayList<Integer>();
 		
+		
 		// Vertical movement
 		int r1 = 0;
         int c1 = 0;
