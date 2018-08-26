@@ -68,6 +68,7 @@ public class GUI implements ActionListener{
 		JMenuItem exitItem=new JMenuItem("Exit");
 		gameMenu.add(exitItem);
 		exitItem.addActionListener(new ActionListener(){
+			//Exit Game after click on "Exit" 
 			public void actionPerformed(ActionEvent e)
 			{
 				System.exit(0);
