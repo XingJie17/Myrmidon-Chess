@@ -3,7 +3,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-public class GUI implements ActionListener{
+public class GUI{
 	
 	private JFrame frame;
 
