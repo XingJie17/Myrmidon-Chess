@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.*;
+import java.lang.Math;
 
 public class Chervon extends  Piece  
 {
