@@ -89,19 +89,49 @@ public final class Board extends JPanel{
         Image scaledImage = image.getScaledInstance(132, 132,  java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImage);
 	}
+	//initialize and display pieces 
 	private static void initialPosition(){
 		/*for(int i = 0; i < 14; i++){
 			pieceManager[i] = new Piece();
 		}*/
+		//initialize piece
+		pieceManager[5][0] = pieceFactory.createPiece("Plus","Red");
+		pieceManager[5][6] = pieceFactory.createPiece("Plus","Red");
+		pieceManager[0][0] = pieceFactory.createPiece("Plus","Blue");
+		pieceManager[0][6] = pieceFactory.createPiece("Plus","Blue");
+		
 		pieceManager[5][1] = pieceFactory.createPiece("Triangle","Red");
 		pieceManager[5][5] = pieceFactory.createPiece("Triangle","Red");
 		pieceManager[0][1] = pieceFactory.createPiece("Triangle","Blue");
 		pieceManager[0][5] = pieceFactory.createPiece("Triangle","Blue");
 
+		pieceManager[5][2] = pieceFactory.createPiece("Chervon","Red");
+		pieceManager[5][4] = pieceFactory.createPiece("Chervon","Red");
+		pieceManager[0][2] = pieceFactory.createPiece("Chervon","Blue");
+		pieceManager[0][4] = pieceFactory.createPiece("Chervon","Blue");
+		
+		pieceManager[5][3] = pieceFactory.createPiece("Sun","Red");
+		pieceManager[0][3] = pieceFactory.createPiece("Sun","Blue");
+		
+		//display pieces
+		grid[5][0].setIcon(loadImage("RedPlus.png"));
+		grid[5][6].setIcon(loadImage("RedPlus.png"));
+		grid[0][0].setIcon(loadImage("BluePlus.png"));
+		grid[0][6].setIcon(loadImage("BluePlus.png"));
+		
 		grid[5][1].setIcon(loadImage("RedTriangle.png"));
 		grid[5][5].setIcon(loadImage("RedTriangle.png"));
 		grid[0][1].setIcon(loadImage("BlueTriangle.png"));
 		grid[0][5].setIcon(loadImage("BlueTriangle.png"));
+		
+		grid[5][2].setIcon(loadImage("RedChervon.png"));
+		grid[5][4].setIcon(loadImage("RedChervon.png"));
+		grid[0][2].setIcon(loadImage("BlueChervon.png"));
+		grid[0][4].setIcon(loadImage("BlueChervon.png"));
+		
+		grid[5][3].setIcon(loadImage("RedSun.png"));
+		grid[0][3].setIcon(loadImage("BlueSun.png"));	
+		
 	}
 	private static void resetBoardColor(){
 		for (int r = 0; r < ROWS; r++) {
