@@ -2,8 +2,8 @@
 
 import java.awt.*;
 import javax.swing.*;
-
-public class GUI {
+import java.awt.event.*;
+public class GUI implements ActionListener{
 	
 	private JFrame frame;
 
@@ -64,7 +64,15 @@ public class GUI {
 		gameMenu.add(new JMenuItem("New Game"));
 		gameMenu.add(new JMenuItem("Save Game"));
 		gameMenu.add(new JMenuItem("Resign"));
-		gameMenu.add(new JMenuItem("Exit"));
+		
+		JMenuItem exitItem=new JMenuItem("Exit");
+		gameMenu.add(exitItem);
+		exitItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				System.exit(0);
+			}
+		});
 		
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
