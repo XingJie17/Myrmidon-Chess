@@ -1,4 +1,4 @@
-package myrmidonChess;
+//package myrmidonChess;
 
 public class PieceFactory{
     public Piece createPiece(String PieceType, String PieceColor){
