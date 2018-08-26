@@ -1,4 +1,4 @@
-//package MyrmidonChess;
+//package myrmidonChess;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -84,11 +84,26 @@ public final class Board extends JPanel{
 		initialPosition();
 		return board;
 	}
+	
+	/*
 	private static ImageIcon loadImage(String path){
         Image image = new ImageIcon(Board.class.getResource(path)).getImage();
         Image scaledImage = image.getScaledInstance(132, 132,  java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImage);
 	}
+	*/
+	
+	/** Returns an ImageIcon, or null if the path was invalid. */
+	private static ImageIcon loadImage(String path) {
+	    java.net.URL imgURL = Board.class.getResource(path);
+	    if (imgURL != null) {
+	        return new ImageIcon(imgURL);
+	    } else {
+	        System.err.println("Couldn't find file: " + path);
+	        return null;
+	    }
+	}
+	
 	//initialize and display pieces 
 	private static void initialPosition(){
 		/*for(int i = 0; i < 14; i++){
