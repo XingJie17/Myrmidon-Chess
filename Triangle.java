@@ -1,10 +1,5 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Random;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.io.*;
 
 public class Triangle extends Piece {
     private String type;
@@ -29,14 +24,10 @@ public class Triangle extends Piece {
 
         ArrayList<Integer> a = new ArrayList<Integer>();
         for(int step = 1; step<=2; step++){
-            int r1 = 0;
-            int c1 = 0;
-            int r2 = 0;
-            int c2 = 0;
-            r1 = r + step;
-            c1 = c + step;
-            r2 = r - step;
-            c2 = c - step;
+            int r1 = r + step;
+            int c1 = c + step;
+            int r2 = r - step;
+            int c2 = c - step;
             if((r1>=0 && r1<=5) && (c1>=0 & c1<=6)){
                 a.add(r1);
                 a.add(c1);

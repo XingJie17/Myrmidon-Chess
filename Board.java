@@ -54,13 +54,13 @@ public final class Board extends JPanel{
 						String temp = g.getActionCommand();
 						int row = Integer.parseInt(temp.substring(0,1));
 						int col = Integer.parseInt(temp.substring(2));
-						ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
-						availableBtn = pieceManager[row][col].showMove(row,col);
-						System.out.println("Size: "+availableBtn.size());
-						for(int i = 0; i < availableBtn.size(); i++){
-							grid[availableBtn.get(i)][availableBtn.get(++i)].setBackground(Color.GREEN);
+						if(pieceManager[row][col] != null){
+							ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
+							availableBtn = pieceManager[row][col].showMove(row,col);
+							for(int i = 0; i < availableBtn.size(); i++){
+								grid[availableBtn.get(i)][availableBtn.get(++i)].setBackground(Color.GREEN);
+							}
 						}
-						System.out.println();
     				}
 				});
 				if ((c % 2 == 1 && r % 2 == 1) || (c % 2 == 0 && r % 2 == 0)) {
@@ -110,23 +110,21 @@ public final class Board extends JPanel{
 			pieceManager[i] = new Piece();
 		}*/
 		//initialize piece
-		pieceManager[5][0] = pieceFactory.createPiece("Plus","Red");
-		pieceManager[5][6] = pieceFactory.createPiece("Plus","Red");
-		pieceManager[0][0] = pieceFactory.createPiece("Plus","Blue");
-		pieceManager[0][6] = pieceFactory.createPiece("Plus","Blue");
+		//pieceManager[5][0] = pieceFactory.createPiece("Plus","Red");
+		//pieceManager[5][6] = pieceFactory.createPiece("Plus","Red");
+		//pieceManager[0][0] = pieceFactory.createPiece("Plus","Blue");
+		//pieceManager[0][6] = pieceFactory.createPiece("Plus","Blue");
 		
 		pieceManager[5][1] = pieceFactory.createPiece("Triangle","Red");
 		pieceManager[5][5] = pieceFactory.createPiece("Triangle","Red");
 		pieceManager[0][1] = pieceFactory.createPiece("Triangle","Blue");
 		pieceManager[0][5] = pieceFactory.createPiece("Triangle","Blue");
 
-		pieceManager[5][2] = pieceFactory.createPiece("Chervon","Red");
-		pieceManager[5][4] = pieceFactory.createPiece("Chervon","Red");
-		pieceManager[0][2] = pieceFactory.createPiece("Chervon","Blue");
-		pieceManager[0][4] = pieceFactory.createPiece("Chervon","Blue");
+		pieceManager[5][0] = pieceFactory.createPiece("Plus","Red");
+		pieceManager[5][6] = pieceFactory.createPiece("Plus","Red");
+		pieceManager[0][0] = pieceFactory.createPiece("Plus","Blue");
+		pieceManager[0][6] = pieceFactory.createPiece("Plus","Blue");
 		
-		pieceManager[5][3] = pieceFactory.createPiece("Sun","Red");
-		pieceManager[0][3] = pieceFactory.createPiece("Sun","Blue");
 		
 		//display pieces
 		grid[5][0].setIcon(loadImage("RedPlus.png"));
