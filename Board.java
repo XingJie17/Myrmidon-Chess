@@ -58,7 +58,14 @@ public final class Board extends JPanel{
 							ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
 							availableBtn = pieceManager[row][col].showMove(row,col);
 							for(int i = 0; i < availableBtn.size(); i++){
-								grid[availableBtn.get(i)][availableBtn.get(++i)].setBackground(Color.GREEN);
+								int x = i;
+								int y = i+1;
+								i++;
+								//System.out.println("i: "+i);
+								if(pieceManager[availableBtn.get(x)][availableBtn.get(y)] == null){
+									grid[availableBtn.get(x)][availableBtn.get(y)].setBackground(Color.GREEN);
+								}
+								//System.out.println("r: "+availableBtn.get(x)+" c: "+availableBtn.get(y));
 							}
 						}
     				}
