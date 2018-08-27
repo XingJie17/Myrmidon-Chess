@@ -132,7 +132,15 @@ public final class Board extends JPanel{
 		pieceManager[0][0] = pieceFactory.createPiece("Plus","Blue");
 		pieceManager[0][6] = pieceFactory.createPiece("Plus","Blue");
 		
+		pieceManager[5][2] = pieceFactory.createPiece("Chevron","Red");
+		pieceManager[5][4] = pieceFactory.createPiece("Chevron","Red");
+		pieceManager[0][2] = pieceFactory.createPiece("Chevron","Blue");
+		pieceManager[0][4] = pieceFactory.createPiece("Chevron","Blue");
 		
+		
+		pieceManager[0][3] = pieceFactory.createPiece("Sun","Blue");
+		pieceManager[5][3] = pieceFactory.createPiece("Sun","Red");
+
 		//display pieces
 		grid[5][0].setIcon(loadImage("RedPlus.png"));
 		grid[5][6].setIcon(loadImage("RedPlus.png"));
@@ -144,10 +152,10 @@ public final class Board extends JPanel{
 		grid[0][1].setIcon(loadImage("BlueTriangle.png"));
 		grid[0][5].setIcon(loadImage("BlueTriangle.png"));
 		
-		grid[5][2].setIcon(loadImage("RedChevron.png"));
-		grid[5][4].setIcon(loadImage("RedChevron.png"));
-		grid[0][2].setIcon(loadImage("BlueChevron.png"));
-		grid[0][4].setIcon(loadImage("BlueChevron.png"));
+		grid[5][2].setIcon(loadImage("RedChervon.png"));
+		grid[5][4].setIcon(loadImage("RedChervon.png"));
+		grid[0][2].setIcon(loadImage("BlueChervon.png"));
+		grid[0][4].setIcon(loadImage("BlueChervon.png"));
 		
 		grid[5][3].setIcon(loadImage("RedSun.png"));
 		grid[0][3].setIcon(loadImage("BlueSun.png"));	
