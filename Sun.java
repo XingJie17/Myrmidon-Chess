@@ -1,4 +1,4 @@
-package myrmidonChess;
+
 
 /** NOT DONE **/
 

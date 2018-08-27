@@ -159,6 +159,7 @@ public final class Board extends JPanel{
 		
 		grid[5][3].setIcon(loadImage("RedSun.png"));
 		grid[0][3].setIcon(loadImage("BlueSun.png"));	
+		//heloooooooooooooooooooooooooooo
 		
 	}
 	private static void resetBoardColor(){
@@ -174,4 +175,6 @@ public final class Board extends JPanel{
 		}
 	
 	}
+
+
 }
