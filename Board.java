@@ -137,10 +137,10 @@ public final class Board extends JPanel{
 		grid[0][1].setIcon(loadImage("BlueTriangle.png"));
 		grid[0][5].setIcon(loadImage("BlueTriangle.png"));
 		
-		grid[5][2].setIcon(loadImage("RedChervon.png"));
-		grid[5][4].setIcon(loadImage("RedChervon.png"));
-		grid[0][2].setIcon(loadImage("BlueChervon.png"));
-		grid[0][4].setIcon(loadImage("BlueChervon.png"));
+		grid[5][2].setIcon(loadImage("RedChevron.png"));
+		grid[5][4].setIcon(loadImage("RedChevron.png"));
+		grid[0][2].setIcon(loadImage("BlueChevron.png"));
+		grid[0][4].setIcon(loadImage("BlueChevron.png"));
 		
 		grid[5][3].setIcon(loadImage("RedSun.png"));
 		grid[0][3].setIcon(loadImage("BlueSun.png"));	
