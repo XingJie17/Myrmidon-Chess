@@ -54,18 +54,16 @@ public final class Board extends JPanel{
 						String temp = g.getActionCommand();
 						int row = Integer.parseInt(temp.substring(0,1));
 						int col = Integer.parseInt(temp.substring(2));
+						ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
+						availableBtn = pieceManager[row][col].showMove(row,col);
 						if(pieceManager[row][col] != null){
-							ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
-							availableBtn = pieceManager[row][col].showMove(row,col);
 							for(int i = 0; i < availableBtn.size(); i++){
 								int x = i;
 								int y = i+1;
 								i++;
-								//System.out.println("i: "+i);
 								if(pieceManager[availableBtn.get(x)][availableBtn.get(y)] == null){
 									grid[availableBtn.get(x)][availableBtn.get(y)].setBackground(Color.GREEN);
 								}
-								//System.out.println("r: "+availableBtn.get(x)+" c: "+availableBtn.get(y));
 							}
 						}
     				}
@@ -113,14 +111,6 @@ public final class Board extends JPanel{
 	
 	//initialize and display pieces 
 	private static void initialPosition(){
-		/*for(int i = 0; i < 14; i++){
-			pieceManager[i] = new Piece();
-		}*/
-		//initialize piece
-		//pieceManager[5][0] = pieceFactory.createPiece("Plus","Red");
-		//pieceManager[5][6] = pieceFactory.createPiece("Plus","Red");
-		//pieceManager[0][0] = pieceFactory.createPiece("Plus","Blue");
-		//pieceManager[0][6] = pieceFactory.createPiece("Plus","Blue");
 		
 		pieceManager[5][1] = pieceFactory.createPiece("Triangle","Red");
 		pieceManager[5][5] = pieceFactory.createPiece("Triangle","Red");
@@ -141,6 +131,12 @@ public final class Board extends JPanel{
 		pieceManager[0][3] = pieceFactory.createPiece("Sun","Blue");
 		pieceManager[5][3] = pieceFactory.createPiece("Sun","Red");
 
+		
+		for (int r = 0; r < ROWS; r++) {
+			for (int c = 0; c < COLUMNS;  c++) {
+				System.out.println(pieceManager[r][c]);
+			}
+		}
 		//display pieces
 		grid[5][0].setIcon(loadImage("RedPlus.png"));
 		grid[5][6].setIcon(loadImage("RedPlus.png"));
@@ -152,14 +148,13 @@ public final class Board extends JPanel{
 		grid[0][1].setIcon(loadImage("BlueTriangle.png"));
 		grid[0][5].setIcon(loadImage("BlueTriangle.png"));
 		
-		grid[5][2].setIcon(loadImage("RedChervon.png"));
-		grid[5][4].setIcon(loadImage("RedChervon.png"));
-		grid[0][2].setIcon(loadImage("BlueChervon.png"));
-		grid[0][4].setIcon(loadImage("BlueChervon.png"));
+		grid[5][2].setIcon(loadImage("RedChevron.png"));
+		grid[5][4].setIcon(loadImage("RedChevron.png"));
+		grid[0][2].setIcon(loadImage("BlueChevron.png"));
+		grid[0][4].setIcon(loadImage("BlueChevron.png"));
 		
 		grid[5][3].setIcon(loadImage("RedSun.png"));
 		grid[0][3].setIcon(loadImage("BlueSun.png"));	
-		//heloooooooooooooooooooooooooooo
 		
 	}
 	private static void resetBoardColor(){
