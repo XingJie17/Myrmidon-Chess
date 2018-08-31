@@ -19,6 +19,8 @@ public class PieceFactory{
             return new Plus("Red");
         } else if (PieceType.equalsIgnoreCase("Plus") & PieceColor.equalsIgnoreCase("Blue")){
             return new Plus("Blue");    
+        } else if (PieceType.equalsIgnoreCase("Empty")){
+            return new Empty("White");    
         } else {
             return null;
         }

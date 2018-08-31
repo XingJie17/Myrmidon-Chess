@@ -34,7 +34,8 @@ public final class Board extends JPanel{
 	private static JButton[][] grid = new JButton[ROWS][COLUMNS];
 	private static Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
 	private static PieceFactory pieceFactory = new PieceFactory();
-	
+	private static int turn= 0;
+
 	public static JPanel insertPanel() {
 		
 		// create grid layout on the chess board
@@ -56,15 +57,22 @@ public final class Board extends JPanel{
 						int col = Integer.parseInt(temp.substring(2));
 						ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
 						availableBtn = pieceManager[row][col].showMove(row,col);
-						if(pieceManager[row][col] != null){
-							for(int i = 0; i < availableBtn.size(); i++){
-								int x = i;
-								int y = i+1;
-								i++;
-								if(pieceManager[availableBtn.get(x)][availableBtn.get(y)] == null){
-									grid[availableBtn.get(x)][availableBtn.get(y)].setBackground(Color.GREEN);
+						if(pieceManager[row][col].getType() != "Empty"){
+                            if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn())){
+                                System.out.println("Player turn: "+getPlayerTurn());
+								setTurnFromBoard();
+								turn++;
+						        for(int i = 0; i < availableBtn.size(); i++){
+						        	int x = i;
+						        	int y = i+1;
+						        	i++;
+						        	if(pieceManager[availableBtn.get(x)][availableBtn.get(y)].getType() == "Empty"){
+						        		grid[availableBtn.get(x)][availableBtn.get(y)].setBackground(Color.GREEN);
+						        	}
 								}
-							}
+								// after a player move, have to call setTurnFromBoard()
+								setTurnFromBoard();
+                            }
 						}
     				}
 				});
@@ -90,14 +98,6 @@ public final class Board extends JPanel{
 		return board;
 	}
 	
-	/*
-	private static ImageIcon loadImage(String path){
-        Image image = new ImageIcon(Board.class.getResource(path)).getImage();
-        Image scaledImage = image.getScaledInstance(132, 132,  java.awt.Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
-	}
-	*/
-	
 	/** Returns an ImageIcon, or null if the path was invalid. */
 	private static ImageIcon loadImage(String path) {
 	    java.net.URL imgURL = Board.class.getResource(path);
@@ -112,6 +112,11 @@ public final class Board extends JPanel{
 	//initialize and display pieces 
 	private static void initialPosition(){
 		
+		for (int r = 0; r < ROWS; r++) {
+			for (int c = 0; c < COLUMNS;  c++) {
+				pieceManager[r][c] = pieceFactory.createPiece("Empty", "White");
+			}
+		}
 		pieceManager[5][1] = pieceFactory.createPiece("Triangle","Red");
 		pieceManager[5][5] = pieceFactory.createPiece("Triangle","Red");
 		pieceManager[0][1] = pieceFactory.createPiece("Triangle","Blue");
@@ -131,30 +136,7 @@ public final class Board extends JPanel{
 		pieceManager[0][3] = pieceFactory.createPiece("Sun","Blue");
 		pieceManager[5][3] = pieceFactory.createPiece("Sun","Red");
 
-		
-		for (int r = 0; r < ROWS; r++) {
-			for (int c = 0; c < COLUMNS;  c++) {
-				System.out.println(pieceManager[r][c]);
-			}
-		}
-		//display pieces
-		grid[5][0].setIcon(loadImage("RedPlus.png"));
-		grid[5][6].setIcon(loadImage("RedPlus.png"));
-		grid[0][0].setIcon(loadImage("BluePlus.png"));
-		grid[0][6].setIcon(loadImage("BluePlus.png"));
-		
-		grid[5][1].setIcon(loadImage("RedTriangle.png"));
-		grid[5][5].setIcon(loadImage("RedTriangle.png"));
-		grid[0][1].setIcon(loadImage("BlueTriangle.png"));
-		grid[0][5].setIcon(loadImage("BlueTriangle.png"));
-		
-		grid[5][2].setIcon(loadImage("RedChevron.png"));
-		grid[5][4].setIcon(loadImage("RedChevron.png"));
-		grid[0][2].setIcon(loadImage("BlueChevron.png"));
-		grid[0][4].setIcon(loadImage("BlueChevron.png"));
-		
-		grid[5][3].setIcon(loadImage("RedSun.png"));
-		grid[0][3].setIcon(loadImage("BlueSun.png"));	
+		setPiece();
 		
 	}
 	private static void resetBoardColor(){
@@ -170,6 +152,30 @@ public final class Board extends JPanel{
 		}
 	
 	}
-
-
+	private static void setPiece(){
+		for (int r = 0; r < ROWS; r++) {
+			for (int c = 0; c < COLUMNS;  c++) {
+				if (pieceManager[r][c].getType()=="Empty"){continue;}
+				String color = pieceManager[r][c].getColor();
+				String type = pieceManager[r][c].getType();
+				String fileName = color+type+".png";
+				grid[r][c].setIcon(loadImage(fileName));
+			}
+		}
+	}
+    // Return player turn [Blue, Red]
+    public static String getPlayerTurn(){
+		if(turn % 2 == 0){
+        	return ("Blue");
+		}
+		else{
+        	return ("Red");
+       	} 
+	}
+	
+	// Return when player make a move
+	// To change the "Current turn" in the GameInfo
+	public static void setTurnFromBoard(){
+		GameInfo.changeCurrentTurn(getPlayerTurn());
+	}
 }

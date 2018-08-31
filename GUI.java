@@ -45,13 +45,8 @@ public class GUI{
 		// Insert player and game information to the right of split pane
 		// ******** TO-DO ********
 		// THIS IS JUST A STUB //
-		JPanel information = new JPanel();
-		information.setLayout(new BoxLayout(information, BoxLayout.Y_AXIS));
-		splitPane.setRightComponent(information);
-		information.add(new JLabel("Player 1"));
-		information.add(new JLabel("Player 2"));
-		information.add(new JLabel("Game Time: 00:00:00"));
-		information.add(new JLabel("Current Turn: Player 1"));
+		splitPane.setRightComponent(GameInfo.insertGameInfoPanel());
+
 		// THIS IS JUST A STUB //
 		// ******** TO-DO ********
 		
