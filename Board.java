@@ -7,11 +7,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.GridLayout;
 
-// *Note: (Not needed for now, to be added later if necessary)
-// import java.awt.image.BufferedImage;
-// import javax.crypto.ShortBufferException;
-// import java.awt.EventQueue;
-
 /*** Written by Yoong Shen Wei ***/
 @SuppressWarnings("serial")
 public final class Board extends JPanel{
@@ -29,20 +24,21 @@ public final class Board extends JPanel{
 	}
 	
 	// Declaration of grid on chess board, row = 6, column = 7
-	private static final int ROWS = 6;
-	private static final int COLUMNS = 7;
+	public static final int ROWS = 6;
+	public static final int COLUMNS = 7;
 	private static JButton[][] grid = new JButton[ROWS][COLUMNS];
 	private static Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
 	private static PieceFactory pieceFactory = new PieceFactory();
-	private static int turn= 0;
+	public static int turn = 0;  // Initial turn = 0
+	private static boolean pieceSelected = false;  // Flag to indicate if a piece is selected
+	
 	//to store the buttons that a piece can move to 
 	private static ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
+	
 	//the store previous pieces which is EmptyWhite
-	private static Piece prevPiece=pieceFactory.createPiece("Empty","White");
+	private static Piece prevPiece = pieceFactory.createPiece("Empty","White");
 	private static int prevRow=0;
 	private static int prevCol=0;
-	private static int j=0;
-	private static int clickOnBP = 0;
 	
 	public static JPanel insertPanel() {
 		
@@ -63,30 +59,27 @@ public final class Board extends JPanel{
 				{
 				    public void actionPerformed(ActionEvent e)
 					{
-						resetBoardColor();
+				    	// Set board color
+				    	resetBoardColor();
+						
+						// To obtain the row and column index of piece clicked by the user
 						String temp = g.getActionCommand();
 						int row = Integer.parseInt(temp.substring(0,1));
-						int col = Integer.parseInt(temp.substring(2));
+						int col = Integer.parseInt(temp.substring(2));		
 						
-						
-						if(pieceManager[row][col].getType() != "Empty")
+						// Action 1: Click to select a piece
+						if(pieceManager[row][col].getType() != "Empty" && pieceSelected == false)
 						{
                             if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn()))
 							{
 								prevRow = row;
 								prevCol = col;
-                                setTurnFromBoard();
-								turn++;
-								prevPiece=pieceManager[row][col];
-								for(int i = 0; i < availableBtn.size(); i++)
-								{
-						        	int x = i;
-						        	int y = i+1;
-						        	i++;
-								}
+								prevPiece = pieceManager[row][col];
+
 								Piece newPiece = pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor());
 								availableBtn = newPiece.showMove(row,col);
-								//show the available move of piece in green 
+								
+								// show the available move of piece in green 
 						        for(int i = 0; i < availableBtn.size(); i++)
 								{
 						        	int x = i;
@@ -97,41 +90,51 @@ public final class Board extends JPanel{
 						        		grid[availableBtn.get(x)][availableBtn.get(y)].setBackground(Color.GREEN);
 						        	}
 								}
-								setTurnFromBoard();
+						        
+						        // set flag piece selected = true
+						        pieceSelected = true;
                             }
 							
 						}
 						
-						//if click on empty spot
-						else
+						// Action 2: Click to move a piece
+						if(pieceManager[row][col].getType() == "Empty" && pieceSelected == true)
 						{
 							String color=prevPiece.getColor();
 							String type=prevPiece.getType();
-							String fileName=color+type+".png";
-							for(int i=0;i<availableBtn.size();i++)
+							for(int i = 0; i < availableBtn.size(); i++)
 							{
 								int x=i;
 								int y=i+1;
 								i++;
-								if(row==availableBtn.get(x) &&col==availableBtn.get(y))
+								if(row == availableBtn.get(x) && col == availableBtn.get(y))
 								{
 									pieceManager[row][col].setType(type);
 									pieceManager[row][col].setColor(color);
 									pieceManager[prevRow][prevCol].setType("Empty");
 									pieceManager[prevRow][prevCol].setColor("White");
-									
 								}
 							}
-							setPiece();
 							availableBtn.clear();
+							
+							// update turn
+							turn++;
+							setTurnFromBoard();
+							
+							// check if need to transform the piece
+							Piece.transform(pieceManager);
+							setPiece();
+							
+							// set flag piece selected = false
+					        pieceSelected = false;
 						}
     				}
 				});
+				
 				if ((c % 2 == 1 && r % 2 == 1) || (c % 2 == 0 && r % 2 == 0)) {
 					g.setBackground(Color.WHITE);
 					
-				}
-				else {
+				} else {
 					g.setBackground(Color.BLACK);
 				}
 				grid[r][c] = g; 
@@ -149,7 +152,7 @@ public final class Board extends JPanel{
 		return board;
 	}
 	
-	/** Returns an ImageIcon, or null if the path was invalid. */
+	/* Returns an ImageIcon, or null if the path was invalid. */
 	private static ImageIcon loadImage(String path) {
 	    java.net.URL imgURL = Board.class.getResource(path);
 	    if (imgURL != null) {
@@ -160,9 +163,8 @@ public final class Board extends JPanel{
 	    }
 	}
 	
-	//initialize and display pieces 
-	private static void initialPosition(){
-		
+	/* initialize and display pieces */
+	public static void initialPosition(){
 		for (int r = 0; r < ROWS; r++) {
 			for (int c = 0; c < COLUMNS;  c++) {
 				pieceManager[r][c] = pieceFactory.createPiece("Empty", "White");
@@ -190,6 +192,8 @@ public final class Board extends JPanel{
 		setPiece();
 		
 	}
+	
+	/* Set the Board color (alternating black and white grid) */
 	private static void resetBoardColor(){
 		for (int r = 0; r < ROWS; r++) {
 			for (int c = 0; c < COLUMNS;  c++) {
@@ -203,6 +207,8 @@ public final class Board extends JPanel{
 		}
 	
 	}
+	
+	/* Insert the image of pieces into the grid */
 	private static void setPiece()
 	{
 		for (int r = 0; r < ROWS; r++) 
@@ -220,7 +226,8 @@ public final class Board extends JPanel{
 			}
 		}
 	}
-    // Return player turn [Blue, Red]
+	
+    /* Return player turn [Blue, Red] */
     public static String getPlayerTurn(){
 		if(turn % 2 == 0){
         	return ("Blue");
@@ -230,15 +237,14 @@ public final class Board extends JPanel{
        	} 
 	}
 	
-	// Return when player make a move
-	// To change the "Current turn" in the GameInfo
+	/* Update "Current turn" in the GameInfo when a player makes a move */
 	public static void setTurnFromBoard(){
 		GameInfo.changeCurrentTurn(getPlayerTurn());
 	}
 	
+	/* ??? */
 	public static void printPM()
 	{
-		
 		System.out.println("--------------------------------------------");
 		for (int r = 0; r < ROWS; r++) 
 		{
