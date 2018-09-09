@@ -1,4 +1,4 @@
-package myrmidonChess;
+//package myrmidonChess;
 
 import java.awt.*;
 import java.awt.event.*;

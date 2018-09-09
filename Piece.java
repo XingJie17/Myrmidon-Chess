@@ -1,7 +1,6 @@
-package myrmidonChess;
+//package myrmidonChess;
 
 import java.util.ArrayList;
-import java.math.*;
 
 public abstract class Piece {
     //private String type;
