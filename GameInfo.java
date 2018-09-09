@@ -14,6 +14,7 @@ public final class GameInfo extends JPanel{
   } 
   // Variabels
   private static JLabel CurrentTurn = new JLabel("Current Turn: Blue");
+  private static String playerTurn = "Blue";
 
   public static JPanel insertGameInfoPanel(){
     gameInfo.setLayout(new BoxLayout(gameInfo, BoxLayout.Y_AXIS));
@@ -26,5 +27,9 @@ public final class GameInfo extends JPanel{
   }
   public static void changeCurrentTurn(String pT){
     CurrentTurn.setText("Current Turn: "+pT);
+    playerTurn = pT;
+  }
+  public static String getCurrentTurn(){
+      return playerTurn;
   }
 }

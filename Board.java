@@ -110,8 +110,7 @@ public final class Board extends JPanel{
 	}
 	
 	//initialize and display pieces 
-	private static void initialPosition(){
-		
+	public static void initialPosition(){
 		for (int r = 0; r < ROWS; r++) {
 			for (int c = 0; c < COLUMNS;  c++) {
 				pieceManager[r][c] = pieceFactory.createPiece("Empty", "White");

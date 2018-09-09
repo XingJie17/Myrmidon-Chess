@@ -58,7 +58,23 @@ public class GUI{
 		menuBar.add(gameMenu);
 		gameMenu.add(new JMenuItem("New Game"));
 		gameMenu.add(new JMenuItem("Save Game"));
-		gameMenu.add(new JMenuItem("Resign"));
+		gameMenu.add(new JMenuItem(new AbstractAction("Resign"){
+                    public void actionPerformed(ActionEvent e){
+                        int button = JOptionPane.YES_NO_OPTION;
+                        int dialogResult = JOptionPane.showConfirmDialog(null, GameInfo.getCurrentTurn()+": resign?");
+                        if(dialogResult == JOptionPane.YES_OPTION){
+                            switch(GameInfo.getCurrentTurn()){
+                                case "Red":
+                                    JOptionPane.showMessageDialog(frame, "BLUE WON!"); 
+                                    break;
+                                case "Blue":
+                                    JOptionPane.showMessageDialog(frame, "RED WON!"); 
+                                    break;
+                            }
+                            Board.initialPosition();
+                        }
+                    }
+        }));
 		
 		JMenuItem exitItem=new JMenuItem("Exit");
 		gameMenu.add(exitItem);
