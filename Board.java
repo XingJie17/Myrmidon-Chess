@@ -1,4 +1,4 @@
-//package myrmidonChess;
+package myrmidonChess;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -29,22 +29,23 @@ public final class Board extends JPanel{
 	}
 	
 	// Declaration of grid on chess board, row = 6, column = 7
-	private static final int ROWS = 6;
-	private static final int COLUMNS = 7;
+	public static final int ROWS = 6;
+	public static final int COLUMNS = 7;
 	private static JButton[][] grid = new JButton[ROWS][COLUMNS];
 	private static Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
 	private static PieceFactory pieceFactory = new PieceFactory();
-	private static int turn= 0;
+	public static int turn = 0;
 
 	public static JPanel insertPanel() {
 		
 		// create grid layout on the chess board
 		board.setLayout(new GridLayout(ROWS, COLUMNS, 1, 1));
 		board.setSize(200,200);
+		
 		// assign color to each grid
 		for (int r = 0; r < ROWS; r++) {
 			for (int c = 0; c < COLUMNS;  c++) {
-				String btnName = r+","+c;
+				String btnName = r + "," + c;
 				// Create a temporary single grid to be colored
 				JButton g = new JButton();
 				g.setActionCommand(btnName);
@@ -72,6 +73,10 @@ public final class Board extends JPanel{
 								}
 								// after a player move, have to call setTurnFromBoard()
 								setTurnFromBoard();
+								
+								// After every 3 turns, transform the pieces
+								Piece.transform(pieceManager);
+								setPiece();
                             }
 						}
     				}
