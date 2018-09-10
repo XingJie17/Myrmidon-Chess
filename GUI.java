@@ -3,6 +3,9 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.*;
+import javax.swing.filechooser.*;
+import java.lang.*;
 public class GUI{
 	
 	private JFrame frame;
@@ -58,23 +61,49 @@ public class GUI{
 		JMenu gameMenu = new JMenu("Game");
 		menuBar.add(gameMenu);
 		gameMenu.add(new JMenuItem("New Game"));
-		gameMenu.add(new JMenuItem("Save Game"));
-		gameMenu.add(new JMenuItem(new AbstractAction("Resign"){
-                    public void actionPerformed(ActionEvent e){
-                        int button = JOptionPane.YES_NO_OPTION;
-                        int dialogResult = JOptionPane.showConfirmDialog(null, GameInfo.getCurrentTurn()+": resign?");
-                        if(dialogResult == JOptionPane.YES_OPTION){
-                            switch(GameInfo.getCurrentTurn()){
-                                case "Red":
-                                    JOptionPane.showMessageDialog(frame, "BLUE WON!"); 
-                                    break;
-                                case "Blue":
-                                    JOptionPane.showMessageDialog(frame, "RED WON!"); 
-                                    break;
-                            }
-                            Board.initialPosition();
-                        }
+		gameMenu.add(new JMenuItem(new AbstractAction("Save Game"){
+            public void actionPerformed(ActionEvent e){
+                JFileChooser fs = new JFileChooser(new File("c:\\"));
+                fs.setDialogTitle("Save Game");
+                FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Text file (*.txt)", ".txt");
+                fs.addChoosableFileFilter(txtFilter);
+                fs.setFileFilter(txtFilter);
+                int result = fs.showSaveDialog(null);
+                if(result == JFileChooser.APPROVE_OPTION){
+                    String content = Board.printPM();
+                    File fi = fs.getSelectedFile();
+                    String fiExt = getFileExtension(fi);
+                    System.out.println(fiExt);
+                    if(!fiExt.equals("txt")){
+                        fi = new File(fi.toString()+".txt");
                     }
+                    try{
+                        FileWriter fw = new FileWriter(fi.getPath());
+                        fw.write(content);
+                        fw.flush();
+                        fw.close();
+                    }catch(Exception e2){
+                        JOptionPane.showMessageDialog(null, e2.getMessage());
+                    }
+                }
+            }
+        }));
+		gameMenu.add(new JMenuItem(new AbstractAction("Resign"){
+            public void actionPerformed(ActionEvent e){
+                int button = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(null, GameInfo.getCurrentTurn()+": resign?");
+                if(dialogResult == JOptionPane.YES_OPTION){
+                    switch(GameInfo.getCurrentTurn()){
+                        case "Red":
+                            JOptionPane.showMessageDialog(frame, "BLUE WON!"); 
+                            break;
+                        case "Blue":
+                            JOptionPane.showMessageDialog(frame, "RED WON!"); 
+                            break;
+                    }
+                    Board.initialPosition();
+                }
+            }
         }));
 		
 		JMenuItem exitItem=new JMenuItem("Exit");
@@ -91,4 +120,14 @@ public class GUI{
 		menuBar.add(helpMenu);
 		helpMenu.add(new JMenuItem("Tutorial"));
 	}
+    private String getFileExtension(File file){
+        System.out.println("\nEnter getFileExtension()");
+        String ext = "";
+        System.out.println(file.getName());
+        String name = file.getName();
+        System.out.println("last index of: "+name.lastIndexOf("."));
+        ext = name.substring(name.lastIndexOf(".")+1);
+        System.out.println("Return: "+ext);
+        return ext;
+    }
 }

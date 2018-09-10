@@ -286,24 +286,24 @@ public final class Board extends JPanel{
 		GameInfo.updateEatenPiece(eatenPiece);
 	}
 	
-	/* Print pieceManager*/
-	public static void printPM()
+	/* Return pieceManager for Saving a game*/
+	public static String printPM()
 	{
-		System.out.println("--------------------------------------------");
+        String position = "";
 		for (int r = 0; r < ROWS; r++) 
 		{
 			for (int c = 0; c < COLUMNS;  c++) 
 			{
-				if (pieceManager[r][c].getType()=="Empty"){
-					
-					continue;
-				}
 				String color = pieceManager[r][c].getColor();
 				String type = pieceManager[r][c].getType();
 				System.out.println(type+color+": "+r+","+c);
+                position = position + color + " " + type + ",";
 			}
 		}
 		System.out.println("--------------------------------------------");
+        System.out.println(position);
+		System.out.println("--------------------------------------------");
+        return position;
 	}
 	/*
 	public static void printEatenPiece()
