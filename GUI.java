@@ -29,7 +29,8 @@ public class GUI{
 	// Initialize the contents of the frame
 	private void initialize() {
 		frame = new JFrame("Myrmidon Chess");
-		frame.setBounds(100, 50, 1500, 1000);
+		//frame.setBounds(100, 50, 1500, 1000);
+		frame.setBounds(0, 0, 1500, 1000);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
 		
