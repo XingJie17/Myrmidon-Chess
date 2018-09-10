@@ -68,11 +68,7 @@ public final class Board extends JPanel{
 						
                         
 						// Action 1: Click to select a piece
-<<<<<<< HEAD
-						if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn())/*&& pieceSelected == false*/)
-=======
-						if(pieceManager[row][col].getType() != "Empty") 
->>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
+						if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn()))
 						{
                             if(true)
 							{
@@ -98,12 +94,6 @@ public final class Board extends JPanel{
                                     {
                                          System.out.println(availableBtn.get(x)+","+availableBtn.get(y)+" - "+pieceManager[availableBtn.get(x)][availableBtn.get(y)].getColor()+" "+pieceManager[availableBtn.get(x)][availableBtn.get(y)].getType());
                                     }
-                                    /* 
-									if(pieceManager[availableBtn.get(x)][availableBtn.get(y)].getType() == "Empty")
-									{
-						        		grid[availableBtn.get(x)][availableBtn.get(y)].setBackground(Color.GREEN);
-						        	}
-                                    */
 								}
                                 System.out.println();
 						        
@@ -112,13 +102,8 @@ public final class Board extends JPanel{
 						}
 						
 						// Action 2: Click to move a piece
-<<<<<<< HEAD
                         else
                         {
-=======
-						if(pieceManager[row][col].getType() == "Empty")
-						{
->>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
 							String color=prevPiece.getColor();
 							String type=prevPiece.getType();
 							for(int i = 0; i < availableBtn.size(); i++)
@@ -132,30 +117,18 @@ public final class Board extends JPanel{
 									pieceManager[row][col].setColor(color);
 									pieceManager[prevRow][prevCol].setType("Empty");
 									pieceManager[prevRow][prevCol].setColor("White");
-<<<<<<< HEAD
 						            // update turn
 						            turn++;
-=======
-									// update turn(only after user press on green box)
-									turn++;
 									setTurnFromBoard();
->>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
 								}
 							}
 							availableBtn.clear();
 							
-<<<<<<< HEAD
 							setTurnFromBoard();
-=======
-							
->>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
 							
 							// check if need to transform the piece
 							Piece.transform(pieceManager);
 							setPiece();
-							
-							
-					       
 						}
     				}
 				});
@@ -271,7 +244,6 @@ public final class Board extends JPanel{
 		GameInfo.changeCurrentTurn(getPlayerTurn());
 	}
 	
-<<<<<<< HEAD
 	/* Print pieceManager*/
 	public static void printPM()
 	{
@@ -290,7 +262,4 @@ public final class Board extends JPanel{
 		}
 		System.out.println("--------------------------------------------");
 	}
-=======
-	
->>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
 }
