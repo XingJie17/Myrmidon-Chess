@@ -30,7 +30,6 @@ public final class Board extends JPanel{
 	private static Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
 	private static PieceFactory pieceFactory = new PieceFactory();
 	public static int turn = 0;  // Initial turn = 0
-	private static boolean pieceSelected = false;  // Flag to indicate if a piece is selected
 	
 	//to store the buttons that a piece can move to 
 	private static ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
@@ -68,7 +67,7 @@ public final class Board extends JPanel{
 						int col = Integer.parseInt(temp.substring(2));		
 						
 						// Action 1: Click to select a piece
-						if(pieceManager[row][col].getType() != "Empty" && pieceSelected == false)
+						if(pieceManager[row][col].getType() != "Empty") 
 						{
                             if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn()))
 							{
@@ -91,14 +90,13 @@ public final class Board extends JPanel{
 						        	}
 								}
 						        
-						        // set flag piece selected = true
-						        pieceSelected = true;
+						        
                             }
 							
 						}
 						
 						// Action 2: Click to move a piece
-						if(pieceManager[row][col].getType() == "Empty" && pieceSelected == true)
+						if(pieceManager[row][col].getType() == "Empty")
 						{
 							String color=prevPiece.getColor();
 							String type=prevPiece.getType();
@@ -113,20 +111,21 @@ public final class Board extends JPanel{
 									pieceManager[row][col].setColor(color);
 									pieceManager[prevRow][prevCol].setType("Empty");
 									pieceManager[prevRow][prevCol].setColor("White");
+									// update turn(only after user press on green box)
+									turn++;
+									setTurnFromBoard();
 								}
 							}
 							availableBtn.clear();
 							
-							// update turn
-							turn++;
-							setTurnFromBoard();
+							
 							
 							// check if need to transform the piece
 							Piece.transform(pieceManager);
 							setPiece();
 							
-							// set flag piece selected = false
-					        pieceSelected = false;
+							
+					       
 						}
     				}
 				});
@@ -242,22 +241,5 @@ public final class Board extends JPanel{
 		GameInfo.changeCurrentTurn(getPlayerTurn());
 	}
 	
-	/* ??? */
-	public static void printPM()
-	{
-		System.out.println("--------------------------------------------");
-		for (int r = 0; r < ROWS; r++) 
-		{
-			for (int c = 0; c < COLUMNS;  c++) 
-			{
-				if (pieceManager[r][c].getType()=="Empty"){
-					continue;
-				}
-				String color = pieceManager[r][c].getColor();
-				String type = pieceManager[r][c].getType();
-				System.out.println(type+color+": "+r+","+c);
-			}
-		}
-		System.out.println("--------------------------------------------");
-	}
+	
 }
