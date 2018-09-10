@@ -30,7 +30,6 @@ public final class Board extends JPanel{
 	private static Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
 	private static PieceFactory pieceFactory = new PieceFactory();
 	public static int turn = 0;  // Initial turn = 0
-	private static boolean pieceSelected = false;  // Flag to indicate if a piece is selected
 	
 	//to store the buttons that a piece can move to 
 	private static ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
@@ -69,7 +68,11 @@ public final class Board extends JPanel{
 						
                         
 						// Action 1: Click to select a piece
+<<<<<<< HEAD
 						if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn())/*&& pieceSelected == false*/)
+=======
+						if(pieceManager[row][col].getType() != "Empty") 
+>>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
 						{
                             if(true)
 							{
@@ -104,14 +107,18 @@ public final class Board extends JPanel{
 								}
                                 System.out.println();
 						        
-						        // set flag piece selected = true
-						        pieceSelected = true;
+						        
                             }
 						}
 						
 						// Action 2: Click to move a piece
+<<<<<<< HEAD
                         else
                         {
+=======
+						if(pieceManager[row][col].getType() == "Empty")
+						{
+>>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
 							String color=prevPiece.getColor();
 							String type=prevPiece.getType();
 							for(int i = 0; i < availableBtn.size(); i++)
@@ -125,20 +132,30 @@ public final class Board extends JPanel{
 									pieceManager[row][col].setColor(color);
 									pieceManager[prevRow][prevCol].setType("Empty");
 									pieceManager[prevRow][prevCol].setColor("White");
+<<<<<<< HEAD
 						            // update turn
 						            turn++;
+=======
+									// update turn(only after user press on green box)
+									turn++;
+									setTurnFromBoard();
+>>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
 								}
 							}
 							availableBtn.clear();
 							
+<<<<<<< HEAD
 							setTurnFromBoard();
+=======
+							
+>>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
 							
 							// check if need to transform the piece
 							Piece.transform(pieceManager);
 							setPiece();
 							
-							// set flag piece selected = false
-					        pieceSelected = false;
+							
+					       
 						}
     				}
 				});
@@ -254,6 +271,7 @@ public final class Board extends JPanel{
 		GameInfo.changeCurrentTurn(getPlayerTurn());
 	}
 	
+<<<<<<< HEAD
 	/* Print pieceManager*/
 	public static void printPM()
 	{
@@ -272,4 +290,7 @@ public final class Board extends JPanel{
 		}
 		System.out.println("--------------------------------------------");
 	}
+=======
+	
+>>>>>>> 72bfede5ef925e07165ef47ae2640b7e2382af89
 }
