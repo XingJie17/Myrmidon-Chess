@@ -30,8 +30,8 @@ public final class Board extends JPanel{
 	private static Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
 	private static PieceFactory pieceFactory = new PieceFactory();
 	public static int turn = 0;  // Initial turn = 0
-	private static int redTurn = 0;  // Initial turn = 0
-	private static int blueTurn = 0;  // Initial turn = 0
+	//private static int redTurn = 0;  // Initial turn = 0
+	//private static int blueTurn = 0;  // Initial turn = 0
 	private static boolean pieceSelected = false;
 	
 	//to store the buttons that a piece can move to 
@@ -159,15 +159,8 @@ public final class Board extends JPanel{
 								
 									// update turn
 									turn++;
-									if (color == "Red") {
-										redTurn++;
-										Piece.transform(pieceManager, redTurn, "Red");
-									} 
-									else {
-										blueTurn++;
-										Piece.transform(pieceManager, blueTurn, "Blue");
-									}
-									
+									Piece.transform(pieceManager, turn);
+								
 									setTurnFromBoard();
 									resetBoardColor();
 									pieceSelected = false;
