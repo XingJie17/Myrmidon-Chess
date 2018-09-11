@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.io.*;
 import javax.swing.filechooser.*;
 import java.lang.*;
+import java.util.Scanner;
 public class GUI{
 	
 	private JFrame frame;
@@ -84,6 +85,30 @@ public class GUI{
                         fw.close();
                     }catch(Exception e2){
                         JOptionPane.showMessageDialog(null, e2.getMessage());
+                    }
+                }
+            }
+        }));
+        gameMenu.add(new JMenuItem(new AbstractAction("Load Game"){
+            public void actionPerformed(ActionEvent e){
+                GameInfo.loadGame();
+                JFileChooser fc = new JFileChooser(new File("c:\\"));
+                fc.setDialogTitle("Load Game");
+                int response = fc.showOpenDialog(null);
+                if(response == JFileChooser.APPROVE_OPTION){
+                    File file = fc.getSelectedFile();
+                    String text = ""; 
+                    try{
+                        System.out.println("Filename: "+file.getName());
+                        System.out.println("File path: "+file.getPath());
+                        Scanner s = new Scanner(new File(file.getPath()));
+                        while(s.hasNext()){
+                            text = text + s.next();
+                        }
+                        //System.out.println(text+"\n");
+                        Board.loadGame(text);
+                    } catch (Exception e2){
+                        JOptionPane.showMessageDialog(null,"Error: "+ e2.getMessage());
                     }
                 }
             }

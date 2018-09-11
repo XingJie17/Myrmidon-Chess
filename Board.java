@@ -130,23 +130,10 @@ public final class Board extends JPanel{
 								i++;
 								if(row == availableBtn.get(x) && col == availableBtn.get(y))
 								{
-									
-									/*if(pieceManager[row][col].getType()!="Empty"/* && pieceManager[row][col].getColor() != color)
-									{
-										if(pieceManager[row][col].getColor()=="Red")
-										{
-											redEatenPiece.add(pieceManager[row][col]);
-											printRed();
-										}
-										
-										
-									}*/
 									if(pieceManager[row][col].getColor() != color && pieceManager[row][col].getColor() != "White")
 									{
 										eatenPiece.add(pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor()));
 										setEatenPieceFromBoard();
-										// if (pieceManager[row][col].getType() == "Sun")
-										// display(color+"Win"!);
 									}
 									//CX :add
 									pieceManager[row][col].setType(type);
@@ -297,7 +284,7 @@ public final class Board extends JPanel{
 				String color = pieceManager[r][c].getColor();
 				String type = pieceManager[r][c].getType();
 				System.out.println(type+color+": "+r+","+c);
-                position = position + color + " " + type + ",";
+                position = position + color + type + ",";
 			}
 		}
 		System.out.println("--------------------------------------------");
@@ -305,6 +292,76 @@ public final class Board extends JPanel{
 		System.out.println("--------------------------------------------");
         return position;
 	}
+    public static void loadGame(String text){
+        ArrayList<Piece> loadGameArrayList = new ArrayList<Piece>();
+	    //Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
+        String color = "";
+        String type = "";
+        int count = 0;
+        int r = 0;
+        int c = 0;
+        for(int i = 0; i<text.length();){
+            //System.out.println(i);
+            int j = i + 1;
+            if(text.substring(i,j).equals("R")){
+                int k = i+3;
+                color = text.substring(i,k);
+                //System.out.print(color);
+                i = k;
+            }
+            else if (text.substring(i,j).equals("B")){
+                int k = i+4;
+                color = text.substring(i,k);
+                //System.out.print(color);
+                i = k;
+            }
+            else if (text.substring(i,j).equals("W")){
+                int k = i+5;
+                color = text.substring(i,k);
+                //System.out.print(color);
+                i = k;
+            }
+            else if (text.substring(i,j).equals("E")){
+                int k = i+5;
+                type = text.substring(i,k);
+                //System.out.println(type);
+                i = k;
+            }else if (text.substring(i,j).equals("P")){
+                int k = i+4;
+                type = text.substring(i,k);
+                //System.out.println(type);
+                i = k;
+            }else if (text.substring(i,j).equals("T")){
+                int k = i+8;
+                type = text.substring(i,k);
+                //System.out.println(type);
+                i = k;
+            }else if (text.substring(i,j).equals("C")){
+                int k = i+7;
+                type = text.substring(i,k);
+                //System.out.println(type);
+                i = k;
+            }else if (text.substring(i,j).equals("S")){
+                int k = i+3;
+                type = text.substring(i,k);
+                //System.out.println(type);
+                i = k;
+            }
+            else{
+                i++;
+                pieceManager[r][c++] = pieceFactory.createPiece(type,color);
+                if(c==7){
+                    c = 0;
+                    r++;
+                }
+            }
+        }
+        setPiece();
+        turn = 0;
+        setTurnFromBoard();
+        availableBtn.clear();
+        eatenPiece.clear();
+    }
 	/*
 	public static void printEatenPiece()
 	{
