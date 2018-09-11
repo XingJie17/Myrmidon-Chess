@@ -26,10 +26,13 @@ public final class Board extends JPanel{
 	// Declaration of grid on chess board, row = 6, column = 7
 	public static final int ROWS = 6;
 	public static final int COLUMNS = 7;
-	private static JButton[][] grid = new JButton[ROWS][COLUMNS];
+	public static JButton[][] grid = new JButton[ROWS][COLUMNS];
 	private static Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
 	private static PieceFactory pieceFactory = new PieceFactory();
 	public static int turn = 0;  // Initial turn = 0
+	private static int redTurn = 0;  // Initial turn = 0
+	private static int blueTurn = 0;  // Initial turn = 0
+	private static boolean pieceSelected = false;
 	
 	//to store the buttons that a piece can move to 
 	private static ArrayList<Integer> availableBtn = new ArrayList<Integer>(); 
@@ -56,105 +59,6 @@ public final class Board extends JPanel{
 				// Create a temporary single grid to be colored
 				JButton g = new JButton();
 				g.setActionCommand(btnName);
-				g.addActionListener(new ActionListener()
-				{
-				    public void actionPerformed(ActionEvent e)
-					{
-				    	// Set board color
-				    	resetBoardColor();
-						
-						// To obtain the row and column index of piece clicked by the user
-						String temp = g.getActionCommand();
-						int row = Integer.parseInt(temp.substring(0,1));
-						int col = Integer.parseInt(temp.substring(2));		
-						
-                        
-						// Action 1: Click to select a piece
-						if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn()))
-						{
-                            if(true)
-							{
-								prevRow = row;
-								prevCol = col;
-								prevPiece = pieceManager[row][col];
-
-								Piece newPiece = pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor());
-								availableBtn = newPiece.showMove(row,col);
-								
-                                //System.out.println("self: "+row+","+col);
-								// show the available move of piece in green 
-						        for(int i = 0; i < availableBtn.size(); i++)
-								{
-						        	int x = i;
-						        	int y = i+1;
-						        	i++;
-                                    if(pieceManager[availableBtn.get(x)][availableBtn.get(y)].getColor() != pieceManager[row][col].getColor())
-                                    {
-						        	    grid[availableBtn.get(x)][availableBtn.get(y)].setBackground(Color.GREEN);
-                                    }
-                                    if(pieceManager[availableBtn.get(x)][availableBtn.get(y)].getType() != "Empty")
-                                    {
-                                        //System.out.println(availableBtn.get(x)+","+availableBtn.get(y)+" - "+pieceManager[availableBtn.get(x)][availableBtn.get(y)].getColor()+" "+pieceManager[availableBtn.get(x)][availableBtn.get(y)].getType());
-                                    }
-								}
-								
-                               
-								
-								for (int r = 0; r < ROWS; r++) 
-								{
-									for (int c = 0; c < COLUMNS;  c++) 
-									{
-											if (pieceManager[r][c].getType()=="Empty")
-											{
-												continue;
-											}
-										String color = pieceManager[r][c].getColor();
-										String type = pieceManager[r][c].getType();
-										//System.out.println(type+color+": "+r+","+c);
-									}
-								}
-						        
-						        
-                            }
-						}
-						
-						// Action 2: Click to move a piece
-                        else
-                        {
-							String color=prevPiece.getColor();
-							String type=prevPiece.getType();
-							for(int i = 0; i < availableBtn.size(); i++)
-							{
-								int x=i;
-								int y=i+1;
-								i++;
-								if(row == availableBtn.get(x) && col == availableBtn.get(y))
-								{
-									if(pieceManager[row][col].getColor() != color && pieceManager[row][col].getColor() != "White")
-									{
-										eatenPiece.add(pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor()));
-										setEatenPieceFromBoard();
-									}
-									//CX :add
-									pieceManager[row][col].setType(type);
-									pieceManager[row][col].setColor(color);
-									
-									pieceManager[prevRow][prevCol].setType("Empty");
-									pieceManager[prevRow][prevCol].setColor("White");
-								
-						            // update turn
-						            turn++;
-									setTurnFromBoard();
-								}
-							}
-							availableBtn.clear();
-							
-							// check if need to transform the piece
-							Piece.transform(pieceManager);
-							setPiece();
-						}
-    				}
-				});
 				
 				if ((c % 2 == 1 && r % 2 == 1) || (c % 2 == 0 && r % 2 == 0)) {
 					g.setBackground(Color.WHITE);
@@ -162,6 +66,127 @@ public final class Board extends JPanel{
 				} else {
 					g.setBackground(Color.BLACK);
 				}
+				
+				g.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						// Set board color
+						//resetBoardColor();
+
+						// To obtain the row and column index of piece clicked by the user
+						String temp = g.getActionCommand();
+						int row = Integer.parseInt(temp.substring(0,1));
+						int col = Integer.parseInt(temp.substring(2));		
+
+						// Action 1: Click to select a piece
+						if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn()) && pieceSelected == false)	{
+							if(pieceSelected == false) {
+								prevRow = row;
+								prevCol = col;
+								prevPiece = pieceManager[row][col];
+
+								Piece newPiece = pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor());
+								availableBtn = newPiece.showMove(pieceManager, row, col);
+								
+								// System.out.println("self: "+row+","+col);
+								// show the available move of piece in green 
+									
+								/* updated showMove() method so no need this 
+								for(int i = 0; i < availableBtn.size(); i++)
+								{
+									int x = i;
+									int y = i+1;
+									i++;
+									if(pieceManager[availableBtn.get(x)][availableBtn.get(y)].getColor() != pieceManager[row][col].getColor())
+									{
+										grid[availableBtn.get(x)][availableBtn.get(y)].setBackground(Color.GREEN);
+									}
+									if(pieceManager[availableBtn.get(x)][availableBtn.get(y)].getType() != "Empty")
+									{
+										//System.out.println(availableBtn.get(x)+","+availableBtn.get(y)+" - "+pieceManager[availableBtn.get(x)][availableBtn.get(y)].getColor()+" "+pieceManager[availableBtn.get(x)][availableBtn.get(y)].getType());
+									}
+								}
+								*/	 
+								
+								for (int r = 0; r < ROWS; r++) {
+									for (int c = 0; c < COLUMNS;  c++) {
+										if (pieceManager[r][c].getType()=="Empty")
+										{
+											continue;
+										}
+										String color = pieceManager[r][c].getColor();
+										String type = pieceManager[r][c].getType();
+										//System.out.println(type+color+": "+r+","+c);
+									}
+								}
+								
+								pieceSelected = true;
+							}
+						}
+						
+						else if (pieceManager[row][col].getType().equalsIgnoreCase(prevPiece.getType()) && pieceManager[row][col].getColor().equalsIgnoreCase(prevPiece.getColor()) && pieceSelected == true){ 
+							System.out.println(prevPiece.getType() + prevPiece.getColor());
+								// Action 2: Click to deselect a piece if the same piece is clicked
+								System.out.println(pieceManager[row][col].getColor());
+								prevRow = 0;
+								prevCol = 0;
+								resetBoardColor();
+								pieceSelected = false;
+							}
+								
+						// Action 3: Click to move a piece (valid move)
+						else if(pieceManager[row][col].getColor() != getPlayerTurn() && pieceSelected == true && grid[row][col].getBackground().equals(Color.GREEN)) {
+							String color=prevPiece.getColor();
+							String type=prevPiece.getType();
+							for(int i = 0; i < availableBtn.size(); i++) {
+								int x=i;
+								int y=i+1;
+								i++;
+								if(row == availableBtn.get(x) && col == availableBtn.get(y)) {
+									if(pieceManager[row][col].getColor() != color && pieceManager[row][col].getColor() != "White")
+									{
+										eatenPiece.add(pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor()));
+										setEatenPieceFromBoard();
+									}
+									
+									//CX :add
+									pieceManager[row][col].setType(type);
+									pieceManager[row][col].setColor(color);
+									
+									pieceManager[prevRow][prevCol].setType("Empty");
+									pieceManager[prevRow][prevCol].setColor("White");
+								
+									// update turn
+									turn++;
+									if (color == "Red") {
+										redTurn++;
+										Piece.transform(pieceManager, redTurn, "Red");
+									} 
+									else {
+										blueTurn++;
+										Piece.transform(pieceManager, blueTurn, "Blue");
+									}
+									
+									setTurnFromBoard();
+									resetBoardColor();
+									pieceSelected = false;
+									availableBtn.clear();
+									setPiece();
+								}
+							}
+						}
+						
+						else {
+							// Action 4: Click to move a piece (invalid move)
+							if(pieceSelected == true && grid[row][col].getBackground() != Color.GREEN) {
+								resetBoardColor();
+								pieceSelected = false;
+							}
+						}
+					}
+				});
+				
 				grid[r][c] = g; 
 			}
 		}

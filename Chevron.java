@@ -1,14 +1,11 @@
-//package MyrmidonChess;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Random;
+//package myrmidonChess;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.io.*;
+
+import java.awt.Color;
 import java.lang.Math;
 
-public class Chevron extends  Piece  
+public class Chevron extends Piece  
 {
 	private String type;
     private String color;
@@ -30,7 +27,7 @@ public class Chevron extends  Piece
         this.color = color;
     }
 	
-	public ArrayList<Integer> showMove(int r,int c)
+	public ArrayList<Integer> showMove(Piece[][] pieceManager, int r, int c)
 	{
 		ArrayList<Integer> a = new ArrayList<Integer>();
 		for(int r1=0;r1<=5;r1++)
@@ -41,11 +38,16 @@ public class Chevron extends  Piece
 				if((Math.abs(r-r1)==2&&Math.abs(c-c1)==1)
 					||(Math.abs(r-r1)==1&&Math.abs(c-c1)==2))
 					{
-						a.add(r1);
-						a.add(c1);
+						if(pieceManager[r1][c1].getColor() != pieceManager[r][c].getColor())
+			            {
+			        	    Board.grid[r1][c1].setBackground(Color.GREEN);
+			        	    a.add(r1);
+			        	    a.add(c1);
+			            }
 					}
 			}
 		}			
 		return a;
 	}
+	
 }
