@@ -16,7 +16,7 @@ public final class GameInfo extends JPanel{
     // Variabels
     private static JLabel CurrentTurn = new JLabel("Current Turn: Blue");
     private static String playerTurn = "Blue";
-    private static JLabel eatenPiecesInfo = new JLabel("<html>Red:<br/><br/>Blue:</html>");
+    private static JLabel eatenPiecesInfo = new JLabel("<html><br/>Red:<br/><br/>Blue:</html>");
    
     public static JPanel insertGameInfoPanel(){
         gameInfo.setLayout(new BoxLayout(gameInfo, BoxLayout.Y_AXIS));
