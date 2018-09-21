@@ -3,7 +3,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
 import javax.swing.*;
 import java.awt.GridLayout;
 
@@ -44,7 +43,8 @@ public final class Board extends JPanel{
 	
 	private static ArrayList<Piece> eatenPiece=new ArrayList<Piece>();
 	
-	public static JPanel insertPanel() {
+	public static JPanel insertPanel() 
+	{
 		
 		// create grid layout on the chess board
 		board.setLayout(new GridLayout(ROWS, COLUMNS, 1, 1));
@@ -60,10 +60,12 @@ public final class Board extends JPanel{
 				JButton g = new JButton();
 				g.setActionCommand(btnName);
 				
-				if ((c % 2 == 1 && r % 2 == 1) || (c % 2 == 0 && r % 2 == 0)) {
+				if ((c % 2 == 1 && r % 2 == 1) || (c % 2 == 0 && r % 2 == 0)) 
+				{
 					g.setBackground(Color.WHITE);
 					
-				} else {
+				} else 
+				{
 					g.setBackground(Color.BLACK);
 				}
 				
@@ -80,14 +82,18 @@ public final class Board extends JPanel{
 						int col = Integer.parseInt(temp.substring(2));		
 
 						// Action 1: Click to select a piece
-						if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn()) && pieceSelected == false)	{
-							if(pieceSelected == false) {
+						if(pieceManager[row][col].getColor().equalsIgnoreCase(getPlayerTurn()) && pieceSelected == false)	
+						{
+							if(pieceSelected == false) 
+							{
 								prevRow = row;
 								prevCol = col;
 								prevPiece = pieceManager[row][col];
 
 								Piece newPiece = pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor());
 								availableBtn = newPiece.showMove(pieceManager, row, col);
+								 
+								
 								for (int r = 0; r < ROWS; r++) {
 									for (int c = 0; c < COLUMNS;  c++) {
 										if (pieceManager[r][c].getType()=="Empty")
@@ -96,7 +102,7 @@ public final class Board extends JPanel{
 										}
 										String color = pieceManager[r][c].getColor();
 										String type = pieceManager[r][c].getType();
-										//System.out.println(type+color+": "+r+","+c);
+									
 									}
 								}
 								
@@ -104,7 +110,8 @@ public final class Board extends JPanel{
 							}
 						}
 						
-						else if (pieceManager[row][col].getType().equalsIgnoreCase(prevPiece.getType()) && pieceManager[row][col].getColor().equalsIgnoreCase(prevPiece.getColor()) && pieceSelected == true){ 
+						else if (pieceManager[row][col].getType().equalsIgnoreCase(prevPiece.getType()) && pieceManager[row][col].getColor().equalsIgnoreCase(prevPiece.getColor()) && pieceSelected == true)
+						{ 
 							System.out.println(prevPiece.getType() + prevPiece.getColor());
 								// Action 2: Click to deselect a piece if the same piece is clicked
 								System.out.println(pieceManager[row][col].getColor());
@@ -112,79 +119,95 @@ public final class Board extends JPanel{
 								prevCol = 0;
 								resetBoardColor();
 								pieceSelected = false;
-							}
+						}
 								
 						// Action 3: Click to move a piece (valid move)
-						else if(pieceManager[row][col].getColor() != getPlayerTurn() && pieceSelected == true && grid[row][col].getBackground().equals(Color.GREEN)) {
+						else if(pieceManager[row][col].getColor() != getPlayerTurn() && pieceSelected == true && grid[row][col].getBackground().equals(Color.GREEN)) 
+						{
 							String color=prevPiece.getColor();
 							String type=prevPiece.getType();
-							for(int i = 0; i < availableBtn.size(); i++) {
+							for(int i = 0; i < availableBtn.size(); i++) 
+							{
 								int x=i;
 								int y=i+1;
 								i++;
-								if(row == availableBtn.get(x) && col == availableBtn.get(y)) 
+								if(row == availableBtn.get(x) && col == availableBtn.get(y))
 								{
+								
+									String losePieceType=null;
+									String losePieceColor=null;
+									JFrame f;
+									
 									if(pieceManager[row][col].getColor() != color && pieceManager[row][col].getColor() != "White")
 									{
-										String losePieceType=null;
-										String losePieceColor=null;
-										JFrame f;
+										eatenPiece.add(pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor()));
+										setEatenPieceFromBoard();
 										
-										if(pieceManager[row][col].getColor() != color && pieceManager[row][col].getColor() != "White")
-										{
-											eatenPiece.add(pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor()));
-											setEatenPieceFromBoard();
+										losePieceType=pieceManager[row][col].getType();
+										losePieceColor=pieceManager[row][col].getColor();
+								
 										
-											losePieceType=pieceManager[row][col].getType();
-											losePieceColor=pieceManager[row][col].getColor();
-										}
-										pieceManager[row][col].setType(type);
-										pieceManager[row][col].setColor(color);
-									
-										pieceManager[prevRow][prevCol].setType("Empty");
-										pieceManager[prevRow][prevCol].setColor("White");
-										
-										if(losePieceType=="Sun")
-										{
-											resetBoardColor();
-											pieceSelected = false;
-											availableBtn.clear();
-											setPiece();	
-											f=new JFrame();
-											switch(losePieceColor)
-											{
-												case "Red":
-												
-													JOptionPane.showMessageDialog(f,"Blue Won!");
-													break;
-												
-												case "Blue":
-												
-													JOptionPane.showMessageDialog(f,"Red Won!");
-													break;
-											
-											}
-										}
-										else
-										{
-											// update turn
-											turn++;
-											Piece.transform(pieceManager, turn);
-											setTurnFromBoard();
-											resetBoardColor();
-											pieceSelected = false;
-											availableBtn.clear();
-											setPiece();
-										}
 									}
-				
+									
+									pieceManager[row][col].setType(type);
+									pieceManager[row][col].setColor(color);
+									pieceManager[prevRow][prevCol].setType("Empty");
+									pieceManager[prevRow][prevCol].setColor("White");
+									if(losePieceType=="Sun")
+									{
+										resetBoardColor();
+										pieceSelected = false;
+										availableBtn.clear();
+										setPiece();	
+										f=new JFrame();
+										switch(losePieceColor)
+										{
+											case "Red":
+												
+												JOptionPane.showMessageDialog(f,"Blue Won!");
+												break;
+												
+											case "Blue":
+												
+												JOptionPane.showMessageDialog(f,"Red Won!");
+												break;
+										}
+										//int n=JOptionPane.showConfirmDialog(f,"Would you like to exit the game?");
+										//if(n==JOptionPane.YES_OPTION)
+										//{
+											//System.exit(0);
+											
+										//}
+										//pop up a message to ask whether to start a new game or exit game?
+										//problem:after ok: what to do? 
+										//initialize the board color,
+										eatenPiece.clear();
+										setEatenPieceFromBoard();
+										turn = 0;
+										setTurnFromBoard();
+										Board.initialPosition();
+										break;
+									}
+									
+									else 
+									{
+										turn++;
+										Piece.transform(pieceManager,turn);
+										setTurnFromBoard();
+										resetBoardColor();
+										pieceSelected = false;
+										availableBtn.clear();
+										setPiece();
+									}
 								}
 							}
 						}
 						
-						else {
+						else 
+						{
 							// Action 4: Click to move a piece (invalid move)
-							if(pieceSelected == true && grid[row][col].getBackground() != Color.GREEN) {
+							if(pieceSelected == true && grid[row][col].getBackground() != Color.GREEN) 
+							{
 								resetBoardColor();
 								pieceSelected = false;
 							}
@@ -197,8 +220,10 @@ public final class Board extends JPanel{
 		}
 		
 		// insert grids into chess board
-		for (int r = 0; r < ROWS; r++) {
-			for (int c = 0; c < COLUMNS;  c++) {
+		for (int r = 0; r < ROWS; r++) 
+		{
+			for (int c = 0; c < COLUMNS;  c++) 
+			{
 				board.add(grid[r][c]);
 			}
 		}
@@ -208,20 +233,26 @@ public final class Board extends JPanel{
 	}
 	
 	/* Returns an ImageIcon, or null if the path was invalid. */
-	private static ImageIcon loadImage(String path) {
+	private static ImageIcon loadImage(String path) 
+	{
 	    java.net.URL imgURL = Board.class.getResource(path);
-	    if (imgURL != null) {
+	    if (imgURL != null) 
+		{
 	        return new ImageIcon(imgURL);
-	    } else {
+	    } else 
+		{
 	        System.err.println("Couldn't find file: " + path);
 	        return null;
 	    }
 	}
 	
 	/* initialize and display pieces */
-	public static void initialPosition(){
-		for (int r = 0; r < ROWS; r++) {
-			for (int c = 0; c < COLUMNS;  c++) {
+	public static void initialPosition()
+	{
+		for (int r = 0; r < ROWS; r++)
+		{
+			for (int c = 0; c < COLUMNS;  c++) 
+			{
 				pieceManager[r][c] = pieceFactory.createPiece("Empty", "White");
 			}
 		}
@@ -245,20 +276,23 @@ public final class Board extends JPanel{
 		pieceManager[5][3] = pieceFactory.createPiece("Sun","Red");
 
 		setPiece();
-		eatenPiece.clear();	
-		GameInfo.updateEatenPiece(eatenPiece);
-		turn = 0;
-		setTurnFromBoard();
+		
 	}
 	
 	/* Set the Board color (alternating black and white grid) */
-	private static void resetBoardColor(){
-		for (int r = 0; r < ROWS; r++) {
-			for (int c = 0; c < COLUMNS;  c++) {
-				if ((c % 2 == 1 && r % 2 == 1) || (c % 2 == 0 && r % 2 == 0)) {
+	private static void resetBoardColor()
+	{
+		for (int r = 0; r < ROWS; r++)
+			
+		{
+			for (int c = 0; c < COLUMNS;  c++) 
+			{
+				if ((c % 2 == 1 && r % 2 == 1) || (c % 2 == 0 && r % 2 == 0)) 
+				{
 					grid[r][c].setBackground(Color.WHITE);
 				}
-				else {
+				else 
+				{
 					grid[r][c].setBackground(Color.BLACK);
 				}
 			}
@@ -273,7 +307,8 @@ public final class Board extends JPanel{
 		{
 			for (int c = 0; c < COLUMNS;  c++) 
 			{
-				if (pieceManager[r][c].getType()=="Empty"){
+				if (pieceManager[r][c].getType()=="Empty")
+				{
 					grid[r][c].setIcon(null);
 					continue;
 				}
@@ -286,21 +321,26 @@ public final class Board extends JPanel{
 	}
 	
     /* Return player turn [Blue, Red] */
-    public static String getPlayerTurn(){
-		if(turn % 2 == 0){
+    public static String getPlayerTurn()
+	{
+		if(turn % 2 == 0)
+		{
         	return ("Blue");
 		}
-		else{
+		else
+		{
         	return ("Red");
        	} 
 	}
 	
 	/* Update "Current turn" in the GameInfo when a player makes a move */
-	public static void setTurnFromBoard(){
-		GameInfo.setCurrentTurn(getPlayerTurn());
+	public static void setTurnFromBoard()
+	{
+		GameInfo.changeCurrentTurn(getPlayerTurn());
+		
 	}
 	/* Update eatenpiece in the GameInfo*/
-	public static void setEatenPieceFromBoard()
+	public static void setEatenPieceFromBoard( )
 	{
 		GameInfo.updateEatenPiece(eatenPiece);
 	}
@@ -308,8 +348,8 @@ public final class Board extends JPanel{
 	/* Return pieceManager for Saving a game*/
 	public static String saveGame()
 	{
-		String position = "";
-		// save position
+        String position = "";
+		//save position
 		for (int r = 0; r < ROWS; r++) 
 		{
 			for (int c = 0; c < COLUMNS;  c++) 
@@ -320,11 +360,12 @@ public final class Board extends JPanel{
                 position = position + color + type + ",";
 			}
 		}
-		// save turn
-		position = position + turn + ",";
+		//save turn 
+		position=position+turn+",";
 		
-		// save eatenpiece
-		for(Piece p : eatenPiece){
+		//save eatenpiece
+		for(Piece p : eatenPiece)
+		{
 			String color = p.getColor();
 			String type = p.getType();
 			position = position + color + type + ",";
@@ -334,9 +375,11 @@ public final class Board extends JPanel{
 		System.out.println("--------------------------------------------");
         return position;
 	}
-    public static void loadGame(String text){
-        System.out.println("_______________from loadGame()_______________");
+    public static void loadGame(String text)
+	{
+		System.out.println("_______________from loadGame()_______________");
         ArrayList<Piece> loadGameArrayList = new ArrayList<Piece>();
+	  
         String color = "";
         String type = "";
         int count = 0;
@@ -344,87 +387,110 @@ public final class Board extends JPanel{
         int c = 0;
 		eatenPiece.clear();
 		String turnTemp = "";
-		for(int i = 0; i < text.length();){
-			int j = i + 1;
-            if(text.substring(i,j).equals("R")){
+        for(int i = 0; i<text.length();)
+		{
+          
+            int j = i + 1;
+            if(text.substring(i,j).equals("R"))
+			{
                 int k = i+3;
                 color = text.substring(i,k);
 				System.out.print(count+".");
                 System.out.print(color);
                 i = k;
             }
-            else if (text.substring(i,j).equals("B")){
+            else if (text.substring(i,j).equals("B"))
+			{
                 int k = i+4;
                 color = text.substring(i,k);
 				System.out.print(count+".");
                 System.out.print(color);
                 i = k;
             }
-            else if (text.substring(i,j).equals("W")){
+            else if (text.substring(i,j).equals("W"))
+			{
                 int k = i+5;
                 color = text.substring(i,k);
-				System.out.print(count+".");
+                System.out.print(count+".");
                 System.out.print(color);
                 i = k;
             }
-            else if (text.substring(i,j).equals("E")){
+            else if (text.substring(i,j).equals("E"))
+			{
                 int k = i+5;
                 type = text.substring(i,k);
                 System.out.println(type);
 				count++;
                 i = k;
-            }else if (text.substring(i,j).equals("P")){
+            }
+			else if (text.substring(i,j).equals("P"))
+			{
                 int k = i+4;
                 type = text.substring(i,k);
                 System.out.println(type);
 				count++;
                 i = k;
-            }else if (text.substring(i,j).equals("T")){
+            }
+			else if (text.substring(i,j).equals("T"))
+			{
                 int k = i+8;
                 type = text.substring(i,k);
                 System.out.println(type);
 				count++;
                 i = k;
-            }else if (text.substring(i,j).equals("C")){
+            }
+			else if (text.substring(i,j).equals("C"))
+			{
                 int k = i+7;
                 type = text.substring(i,k);
                 System.out.println(type);
 				count++;
                 i = k;
-            }else if (text.substring(i,j).equals("S")){
+            }
+			else if (text.substring(i,j).equals("S"))
+			{
                 int k = i+3;
                 type = text.substring(i,k);
                 System.out.println(type);
 				count++;
                 i = k;
-			}
-			else {
-				if(!text.substring(i,j).equals(",")){
-					turnTemp = turnTemp + text.substring(i,j);
-				}else{
-					System.out.println(text.substring(i,j));
-				}
-				if(turnTemp.equals("")){
- 	               pieceManager[r][c++] = pieceFactory.createPiece(type,color);
- 	               if(c==7){
- 	                   c = 0;
- 	                   r++;
-					}
-					int x = j;
-					int y = x + 1;
-				}else{
-					eatenPiece.add(pieceFactory.createPiece(type,color));
-				}
-
-				i++;
-			}
-		}
+            }
+            else
+			{
+               if(!text.substring(i,j).equals(","))
+			   { 
+				turnTemp = turnTemp + text.substring(i,j);
+			   }
+			   else
+			   {
+				   System.out.println(text.substring(i,j));
+			   }
+			   if(turnTemp.equals(""))
+			   {
+				 pieceManager[r][c++] = pieceFactory.createPiece(type,color);  
+                if(c==7)
+				{
+                    c = 0;
+                    r++;
+                }
+				int x = j;
+				int y = x + 1;
+			   }
+			   else
+			   {
+				   eatenPiece.add(pieceFactory.createPiece(type,color));
+			   }
+			   i++;
+			   
+            }
+        }
 		turn = Integer.parseInt(turnTemp);
-		setPiece();
+        setPiece();
+        turn = 0;
         setTurnFromBoard();
         availableBtn.clear();
+        //eatenPiece.clear();
 		setEatenPieceFromBoard();
-        System.out.println("_______________end of loadGame()_______________");
     }
 	/*
 	public static void printEatenPiece()

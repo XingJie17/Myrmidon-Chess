@@ -10,15 +10,17 @@ public final class GameInfo extends JPanel{
    
     private GameInfo(){};
    
-    public static GameInfo getGameInfo(){
+    public static GameInfo getGameInfo()
+	{
         return gameInfo;
     } 
-    // Variabels
+    // Variables
     private static JLabel CurrentTurn = new JLabel("Current Turn: Blue");
     private static String playerTurn = "Blue";
     private static JLabel eatenPiecesInfo = new JLabel("<html><br/>Red:<br/><br/>Blue:</html>");
    
-    public static JPanel insertGameInfoPanel(){
+    public static JPanel insertGameInfoPanel()
+	{
         gameInfo.setLayout(new BoxLayout(gameInfo, BoxLayout.Y_AXIS));
         gameInfo.add(new JLabel("Player 1"));
         gameInfo.add(new JLabel("Player 2"));
@@ -28,14 +30,18 @@ public final class GameInfo extends JPanel{
    
         return gameInfo;
     }
-    public static void setCurrentTurn(String pT){
+    public static void changeCurrentTurn(String pT)
+	{
         CurrentTurn.setText("Current Turn: "+pT);
         playerTurn = pT;
     }
-    public static String getCurrentTurn(){
+    public static String getCurrentTurn()
+	{
         return playerTurn;
     }   
-    public static void updateEatenPiece(ArrayList<Piece> list){
+	
+    public static void updateEatenPiece(ArrayList<Piece> list)
+	{
         String tempRed = "<html>Red:<br/>";
         String tempBlue = "Blue:<br/>";
         for(Piece p:list)
@@ -54,12 +60,15 @@ public final class GameInfo extends JPanel{
         tempBlue = tempBlue + "</html>";
         eatenPiecesInfo.setText(tempRed+tempBlue);
     }
-    public static void loadGame(){
-        eatenPiecesInfo.setText("<html><br/>Red:<br/><br/>Blue:</html>");
+    public static void loadGame()
+	{
+        eatenPiecesInfo.setText("<html>Red:<br/>Blue:</html>");
     } 
-    public static void newGame(){
-       setCurrentTurn("Blue"); 
-       eatenPiecesInfo.setText("<html><br/>Red:<br/><br/>Blue:</html>");
-    }
+	public static void newGame()
+	{
+		Board.turn = 0;
+		Board.setTurnFromBoard();
+		eatenPiecesInfo.setText("<html>Red:<br/><br/>Blue:</html>");
+	}
 }
 
