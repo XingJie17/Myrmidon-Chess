@@ -28,7 +28,7 @@ public final class GameInfo extends JPanel{
    
         return gameInfo;
     }
-    public static void changeCurrentTurn(String pT){
+    public static void setCurrentTurn(String pT){
         CurrentTurn.setText("Current Turn: "+pT);
         playerTurn = pT;
     }
@@ -55,7 +55,11 @@ public final class GameInfo extends JPanel{
         eatenPiecesInfo.setText(tempRed+tempBlue);
     }
     public static void loadGame(){
-        eatenPiecesInfo.setText("<html>Red:<br/><br/>Blue:</html>");
+        eatenPiecesInfo.setText("<html><br/>Red:<br/><br/>Blue:</html>");
     } 
+    public static void newGame(){
+       setCurrentTurn("Blue"); 
+       eatenPiecesInfo.setText("<html><br/>Red:<br/><br/>Blue:</html>");
+    }
 }
 

@@ -1,4 +1,10 @@
 //package MyrmidonChess;
+/*
+    TO DO:
+    -- Fix load game: turn
+    -- New game function
+    -- Save eaten piece
+*/
 
 import java.awt.*;
 import javax.swing.*;
@@ -63,7 +69,12 @@ public class GUI{
 		
 		JMenu gameMenu = new JMenu("Game");
 		menuBar.add(gameMenu);
-		gameMenu.add(new JMenuItem("New Game"));
+        gameMenu.add(new JMenuItem(new AbstractAction("New Game"){
+            public void actionPerformed(ActionEvent e){
+                Board.initialPosition();
+                GameInfo.newGame();
+            }
+        }));
 		gameMenu.add(new JMenuItem(new AbstractAction("Save Game"){
             public void actionPerformed(ActionEvent e){
                 JFileChooser fs = new JFileChooser(new File("c:\\"));
@@ -73,7 +84,7 @@ public class GUI{
                 fs.setFileFilter(txtFilter);
                 int result = fs.showSaveDialog(null);
                 if(result == JFileChooser.APPROVE_OPTION){
-                    String content = Board.printPM();
+                    String content = Board.saveGame();
                     File fi = fs.getSelectedFile();
                     String fiExt = getFileExtension(fi);
                     System.out.println(fiExt);
@@ -107,7 +118,6 @@ public class GUI{
                         while(s.hasNext()){
                             text = text + s.next();
                         }
-                        //System.out.println(text+"\n");
                         Board.loadGame(text);
                     } catch (Exception e2){
                         JOptionPane.showMessageDialog(null,"Error: "+ e2.getMessage());
@@ -129,6 +139,7 @@ public class GUI{
                             break;
                     }
                     Board.initialPosition();
+                    GameInfo.newGame();
                 }
             }
         }));
@@ -145,7 +156,7 @@ public class GUI{
 		
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
-		helpMenu.add(new JMenuItem("Tutorial"));
+        helpMenu.add(new JMenuItem("Tutorial"));
 	}
     private String getFileExtension(File file){
         System.out.println("\nEnter getFileExtension()");
