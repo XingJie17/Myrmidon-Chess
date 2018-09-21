@@ -176,6 +176,7 @@ public final class Board extends JPanel{
 											availableBtn.clear();
 											setPiece();
 										}
+									}
 				
 								}
 							}
