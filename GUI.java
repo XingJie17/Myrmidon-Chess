@@ -69,12 +69,16 @@ public class GUI{
 		
 		JMenu gameMenu = new JMenu("Game");
 		menuBar.add(gameMenu);
-        gameMenu.add(new JMenuItem(new AbstractAction("New Game"){
-            public void actionPerformed(ActionEvent e){
-                Board.initialPosition();
-                GameInfo.newGame();
-            }
-        }));
+		gameMenu.add(new JMenuItem(new AbstractAction("New Game")
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				Board.initialPosition();	
+				GameInfo.newGame();
+			}
+			
+		}));
+		
 		gameMenu.add(new JMenuItem(new AbstractAction("Save Game"){
             public void actionPerformed(ActionEvent e){
                 JFileChooser fs = new JFileChooser(new File("c:\\"));
@@ -102,6 +106,7 @@ public class GUI{
                 }
             }
         }));
+		
         gameMenu.add(new JMenuItem(new AbstractAction("Load Game"){
             public void actionPerformed(ActionEvent e){
                 GameInfo.loadGame();
@@ -144,15 +149,18 @@ public class GUI{
             }
         }));
 		
-		JMenuItem exitItem=new JMenuItem("Exit");
-		gameMenu.add(exitItem);
-		exitItem.addActionListener(new ActionListener(){
-			//Exit Game after click on "Exit" 
+		gameMenu.add(new JMenuItem(new AbstractAction("Exit")
+		{
 			public void actionPerformed(ActionEvent e)
 			{
-				System.exit(0);
+				JFrame f=new JFrame();
+				int n=JOptionPane.showConfirmDialog(f,"Would you like to exit the game?");
+				if(n==JOptionPane.YES_OPTION)
+				{
+					System.exit(0);
+				}
 			}
-		});
+		}));
 		
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
