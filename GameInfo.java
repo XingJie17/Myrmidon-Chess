@@ -57,5 +57,11 @@ public final class GameInfo extends JPanel{
     public static void loadGame(){
         eatenPiecesInfo.setText("<html>Red:<br/><br/>Blue:</html>");
     } 
+    public static void newGame()
+    {
+        Board.turn=0;
+        Board.setTurnFromBoard();
+        eatenPiecesInfo.setText("<html>Red:<br/><br/>Blue:</html>");
+    }
 }
 
