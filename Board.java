@@ -88,27 +88,7 @@ public final class Board extends JPanel{
 
 								Piece newPiece = pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor());
 								availableBtn = newPiece.showMove(pieceManager, row, col);
-								
-								// System.out.println("self: "+row+","+col);
-								// show the available move of piece in green 
-									
-								/* updated showMove() method so no need this 
-								for(int i = 0; i < availableBtn.size(); i++)
-								{
-									int x = i;
-									int y = i+1;
-									i++;
-									if(pieceManager[availableBtn.get(x)][availableBtn.get(y)].getColor() != pieceManager[row][col].getColor())
-									{
-										grid[availableBtn.get(x)][availableBtn.get(y)].setBackground(Color.GREEN);
-									}
-									if(pieceManager[availableBtn.get(x)][availableBtn.get(y)].getType() != "Empty")
-									{
-										//System.out.println(availableBtn.get(x)+","+availableBtn.get(y)+" - "+pieceManager[availableBtn.get(x)][availableBtn.get(y)].getColor()+" "+pieceManager[availableBtn.get(x)][availableBtn.get(y)].getType());
-									}
-								}
-								*/	 
-								
+					
 								for (int r = 0; r < ROWS; r++) {
 									for (int c = 0; c < COLUMNS;  c++) {
 										if (pieceManager[r][c].getType()=="Empty")
@@ -143,29 +123,61 @@ public final class Board extends JPanel{
 								int x=i;
 								int y=i+1;
 								i++;
-								if(row == availableBtn.get(x) && col == availableBtn.get(y)) {
+								if(row == availableBtn.get(x) && col == availableBtn.get(y)) 
+								{
 									if(pieceManager[row][col].getColor() != color && pieceManager[row][col].getColor() != "White")
 									{
-										eatenPiece.add(pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor()));
-										setEatenPieceFromBoard();
-									}
+										String losePieceType=null;
+										String losePieceColor=null;
+										JFrame f;
+										
+										if(pieceManager[row][col].getColor() != color && pieceManager[row][col].getColor() != "White")
+										{
+											eatenPiece.add(pieceFactory.createPiece(pieceManager[row][col].getType(),pieceManager[row][col].getColor()));
+											setEatenPieceFromBoard();
+										
+											losePieceType=pieceManager[row][col].getType();
+											losePieceColor=pieceManager[row][col].getColor();
+										}
+										pieceManager[row][col].setType(type);
+										pieceManager[row][col].setColor(color);
 									
-									//CX :add
-									pieceManager[row][col].setType(type);
-									pieceManager[row][col].setColor(color);
-									
-									pieceManager[prevRow][prevCol].setType("Empty");
-									pieceManager[prevRow][prevCol].setColor("White");
-								
-									// update turn
-									turn++;
-									Piece.transform(pieceManager, turn);
-								
-									setTurnFromBoard();
-									resetBoardColor();
-									pieceSelected = false;
-									availableBtn.clear();
-									setPiece();
+										pieceManager[prevRow][prevCol].setType("Empty");
+										pieceManager[prevRow][prevCol].setColor("White");
+										
+										if(losePieceType=="Sun")
+										{
+											resetBoardColor();
+											pieceSelected = false;
+											availableBtn.clear();
+											setPiece();	
+											f=new JFrame();
+											switch(losePieceColor)
+											{
+												case "Red":
+												
+													JOptionPane.showMessageDialog(f,"Blue Won!");
+													break;
+												
+												case "Blue":
+												
+													JOptionPane.showMessageDialog(f,"Red Won!");
+													break;
+											
+											}
+										}
+										else
+										{
+											// update turn
+											turn++;
+											Piece.transform(pieceManager, turn);
+											setTurnFromBoard();
+											resetBoardColor();
+											pieceSelected = false;
+											availableBtn.clear();
+											setPiece();
+										}
+				
 								}
 							}
 						}
