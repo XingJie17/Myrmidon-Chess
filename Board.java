@@ -73,9 +73,6 @@ public final class Board extends JPanel{
 				{
 					public void actionPerformed(ActionEvent e)
 					{
-						// Set board color
-						//resetBoardColor();
-
 						// To obtain the row and column index of piece clicked by the user
 						String temp = g.getActionCommand();
 						int row = Integer.parseInt(temp.substring(0,1));
@@ -110,11 +107,9 @@ public final class Board extends JPanel{
 							}
 						}
 						
+						// Action 2: Click to deselect a piece if the same piece is clicked
 						else if (pieceManager[row][col].getType().equalsIgnoreCase(prevPiece.getType()) && pieceManager[row][col].getColor().equalsIgnoreCase(prevPiece.getColor()) && pieceSelected == true)
 						{ 
-							System.out.println(prevPiece.getType() + prevPiece.getColor());
-								// Action 2: Click to deselect a piece if the same piece is clicked
-								System.out.println(pieceManager[row][col].getColor());
 								prevRow = 0;
 								prevCol = 0;
 								resetBoardColor();
@@ -194,9 +189,9 @@ public final class Board extends JPanel{
 							}
 						}
 						
+						// Action 4: Click to move a piece (invalid move)
 						else 
 						{
-							// Action 4: Click to move a piece (invalid move)
 							if(pieceSelected == true && grid[row][col].getBackground() != Color.GREEN) 
 							{
 								resetBoardColor();
@@ -205,7 +200,7 @@ public final class Board extends JPanel{
 						}
 					}
 				});
-				
+				// Add button to Board	
 				grid[r][c] = g; 
 			}
 		}
@@ -236,7 +231,7 @@ public final class Board extends JPanel{
 	        return null;
 	    }
 	}
-	// <Phatcharawat Chaemchoy>	
+	/* (Phatcharawat Chaemchoy) */ 	
 	/* initialize and display pieces */
 	public static void initialPosition()
 	{
@@ -267,9 +262,9 @@ public final class Board extends JPanel{
 		pieceManager[5][3] = pieceFactory.createPiece("Sun","Red");
 
 		setPiece();
-		
+		eatenPiece.clear();	
+		turn = 0;
 	}
-	// </Phatcharawat Chaemchoy>
 	
 	/* Set the Board color (alternating black and white grid) */
 	private static void resetBoardColor()
@@ -348,7 +343,6 @@ public final class Board extends JPanel{
 			{
 				String color = pieceManager[r][c].getColor();
 				String type = pieceManager[r][c].getType();
-				System.out.println(type+color+": "+r+","+c);
                 position = position + color + type + ",";
 			}
 		}
@@ -362,15 +356,13 @@ public final class Board extends JPanel{
 			String type = p.getType();
 			position = position + color + type + ",";
 		}
-		System.out.println("--------------------------------------------");
-        System.out.println(position);
-		System.out.println("--------------------------------------------");
         return position;
 	}
+
+	/* Load game */
     public static void loadGame(String text)
 	{
 		resetBoardColor();
-		System.out.println("_______________from loadGame()_______________");
         ArrayList<Piece> loadGameArrayList = new ArrayList<Piece>();
 	  
         String color = "";
@@ -385,36 +377,28 @@ public final class Board extends JPanel{
 		{
 
             int j = i + 1;
-          	System.out.println(text.substring(i,j));
             if(text.substring(i,j).equals("R"))
 			{
                 int k = i+3;
                 color = text.substring(i,k);
-				//System.out.print(count+".");
-                //System.out.print(color);
                 i = k;
             }
             else if (text.substring(i,j).equals("B"))
 			{
                 int k = i+4;
                 color = text.substring(i,k);
-				//System.out.print(count+".");
-                //System.out.print(color);
                 i = k;
             }
             else if (text.substring(i,j).equals("W"))
 			{
                 int k = i+5;
                 color = text.substring(i,k);
-                //System.out.print(count+".");
-                //System.out.print(color);
                 i = k;
             }
             else if (text.substring(i,j).equals("E"))
 			{
                 int k = i+5;
                 type = text.substring(i,k);
-                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -422,7 +406,6 @@ public final class Board extends JPanel{
 			{
                 int k = i+4;
                 type = text.substring(i,k);
-                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -430,7 +413,6 @@ public final class Board extends JPanel{
 			{
                 int k = i+8;
                 type = text.substring(i,k);
-                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -438,7 +420,6 @@ public final class Board extends JPanel{
 			{
                 int k = i+7;
                 type = text.substring(i,k);
-                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -446,7 +427,6 @@ public final class Board extends JPanel{
 			{
                 int k = i+3;
                 type = text.substring(i,k);
-                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -465,7 +445,6 @@ public final class Board extends JPanel{
 			   }
 			   else if(turnFound == false)
 			   {
-					System.out.println("Add to PieceManager: "+color+" "+type);
 					pieceManager[r][c++] = pieceFactory.createPiece(type,color);  
 					if(c==7)
 					{
@@ -475,45 +454,15 @@ public final class Board extends JPanel{
 				}
 				else
 			    {
-					System.out.println("Add to Eaten: "+color+" "+type);
 					eatenPiece.add(pieceFactory.createPiece(type,color));
 				}
 				i++;
             }
 		}
 		turn = Integer.parseInt(turnTemp);
-		System.out.println("---- Break point ----");
         setPiece();
         setTurnFromBoard();
         availableBtn.clear();
-        //eatenPiece.clear();
 		setEatenPieceFromBoard();
     }
-	/*
-	public static void printEatenPiece()
-	{
-		for (int r = 0; r < ROWS; r++) 
-		{
-			for (int c = 0; c < COLUMNS;  c++) 
-			{
-				if (pieceManager[r][c].getColor()=="Red")
-				{
-					System.out.println( pieceManager[r][c].getType()+"")
-					
-				}
-				else
-				{
-					
-				}
-				
-				;
-				System.out.println(type+color+": "+r+","+c);
-			}
-		}
-		String r = "Red:\n";
-		String b = "Blue:\n";
-		for(Piece
- 	}
-	*/
-	
 }
