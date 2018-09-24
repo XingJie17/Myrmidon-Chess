@@ -28,9 +28,7 @@ public final class Board extends JPanel{
 	public static JButton[][] grid = new JButton[ROWS][COLUMNS];
 	private static Piece[][] pieceManager = new Piece[ROWS][COLUMNS];
 	private static PieceFactory pieceFactory = new PieceFactory();
-	public static int turn = 0;  // Initial turn = 0
-	//private static int redTurn = 0;  // Initial turn = 0
-	//private static int blueTurn = 0;  // Initial turn = 0
+	public static int turn = 0;  
 	private static boolean pieceSelected = false;
 	
 	//to store the buttons that a piece can move to 
