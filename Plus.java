@@ -2,15 +2,8 @@
 
 import java.awt.Color;
 
-/** NOT DONE **/
-
-//import javax.swing.*;
-//import java.awt.*;
-//import java.awt.event.*;
-//import java.util.Random;
 import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.io.*;
+
 
 
 public class Plus extends Piece  
@@ -38,7 +31,7 @@ public class Plus extends Piece
 	public void checkOccupied(ArrayList<Integer> a) {
 		// TODO
 	}
-    
+    	/* (Lucinda,) */ 	
 	public ArrayList<Integer> showMove(Piece[][] pieceManager, int r, int c)
 	{
 		ArrayList<Integer> a = new ArrayList<Integer>();
