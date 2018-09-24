@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 
-
+/*(Shen Wei,Lucinda)*/
 public class Plus extends Piece  
 {
 	private String type;
@@ -30,13 +30,11 @@ public class Plus extends Piece
 	
 	public void checkOccupied(ArrayList<Integer> a) {
 		// TODO
-	}
-    	/* (Lucinda,) */ 	
+	}	
 	public ArrayList<Integer> showMove(Piece[][] pieceManager, int r, int c)
 	{
 		ArrayList<Integer> a = new ArrayList<Integer>();
-		//Haven't done (if blockage then cannot move)[PIECE]
-		//Verify pawn can go backwards direction? 
+
 		
 		// Initialize 4 paths blocked flag
         boolean[] pathBlocked = new boolean[4];

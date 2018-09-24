@@ -1,7 +1,7 @@
 //package myrmidonChess;
 
 import java.util.ArrayList;
-
+/*(Jeff)*/
 public class Empty extends Piece {
     private String type;
     private String color;

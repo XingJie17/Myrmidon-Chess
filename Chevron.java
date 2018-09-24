@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import java.awt.Color;
 import java.lang.Math;
-
+/*(Lucinda)*/
 public class Chevron extends Piece  
 {
 	private String type;

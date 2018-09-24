@@ -69,6 +69,7 @@ public final class Board extends JPanel{
 				
 				g.addActionListener(new ActionListener()
 				{
+					/*(Shen Wei,Lucinda,Jeff)*/	
 					public void actionPerformed(ActionEvent e)
 					{
 						// To obtain the row and column index of piece clicked by the user
@@ -217,6 +218,7 @@ public final class Board extends JPanel{
 	}
 	
 	/* Returns an ImageIcon, or null if the path was invalid. */
+	/*(Shen Wei)*/	
 	private static ImageIcon loadImage(String path) 
 	{
 	    java.net.URL imgURL = Board.class.getResource(path);
@@ -229,8 +231,9 @@ public final class Board extends JPanel{
 	        return null;
 	    }
 	}
-	/* (Phatcharawat Chaemchoy) */ 	
+	
 	/* initialize and display pieces */
+   /*(Jeff)*/	
 	public static void initialPosition()
 	{
 		for (int r = 0; r < ROWS; r++)
@@ -265,6 +268,7 @@ public final class Board extends JPanel{
 	}
 	
 	/* Set the Board color (alternating black and white grid) */
+	/*(Shen Wei)*/	
 	private static void resetBoardColor()
 	{
 		for (int r = 0; r < ROWS; r++)
@@ -285,6 +289,7 @@ public final class Board extends JPanel{
 	
 	}
 	
+	/*(Jeff)*/
 	/* Insert the image of pieces into the grid */
 	private static void setPiece()
 	{
@@ -305,6 +310,7 @@ public final class Board extends JPanel{
 		}
 	}
 	
+	/*(Jeff)*/
     /* Return player turn [Blue, Red] */
     public static String getPlayerTurn()
 	{
@@ -318,18 +324,21 @@ public final class Board extends JPanel{
        	} 
 	}
 	
+	/*(Jeff)*/
 	/* Update "Current turn" in the GameInfo when a player makes a move */
 	public static void setTurnFromBoard()
 	{
 		GameInfo.changeCurrentTurn(getPlayerTurn());
 		
 	}
+	/*(Lucinda)*/
 	/* Update eatenpiece in the GameInfo*/
 	public static void setEatenPieceFromBoard( )
 	{
 		GameInfo.updateEatenPiece(eatenPiece);
 	}
 	
+	/*(Jeff)*/
 	/* Return pieceManager for Saving a game*/
 	public static String saveGame()
 	{
@@ -357,6 +366,7 @@ public final class Board extends JPanel{
         return position;
 	}
 
+	/*(Jeff)*/
 	/* Load game */
     public static void loadGame(String text)
 	{

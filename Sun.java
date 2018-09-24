@@ -2,7 +2,7 @@
 
 import java.awt.Color;
 import java.util.ArrayList;
-
+/*(Shen Wei,Lucinda)*/	
 public class Sun extends Piece  
 {
 	private String type;
@@ -28,7 +28,8 @@ public class Sun extends Piece
         this.color = color;
     }
     
-    /* (Lucinda,) */ 	
+   
+
 	public ArrayList<Integer> showMove(Piece[][] pieceManager, int r, int c)
 	{
 		ArrayList<Integer> a = new ArrayList<Integer>();

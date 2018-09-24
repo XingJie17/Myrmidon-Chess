@@ -36,6 +36,7 @@ public class GUI
 	}
 	
 	// Initialize the contents of the frame
+	/*(Jeff,Lucinda,Shen Wei)*/
 	private void initialize() 
 	{
 		frame = new JFrame("Myrmidon Chess");
@@ -65,7 +66,8 @@ public class GUI
 	   	frame.setJMenuBar(menuBar);
 	   	JMenu gameMenu = new JMenu("Game");
 		menuBar.add(gameMenu);
-	    
+
+		/*(Lucinda)*/
 	    //New Game 
 	    gameMenu.add(new JMenuItem(new AbstractAction("New Game"){
 			public void actionPerformed(ActionEvent e)
@@ -75,6 +77,7 @@ public class GUI
 			}	
 	    }));
 		
+		/*(Jeff)*/
 		//Save Game
 	    gameMenu.add(new JMenuItem(new AbstractAction("Save Game"){
 			 public void actionPerformed(ActionEvent e)
@@ -107,6 +110,7 @@ public class GUI
             }
 		}));
 		
+		/*(Jeff)*/
 		//Load Game
         gameMenu.add(new JMenuItem(new AbstractAction("Load Game"){
         	public void actionPerformed(ActionEvent e)
@@ -138,6 +142,7 @@ public class GUI
            	}
         }));
 		
+		/*(Jeff)*/
 		//Resign Game
 		gameMenu.add(new JMenuItem(new AbstractAction("Resign"){
             public void actionPerformed(ActionEvent e)
@@ -161,6 +166,7 @@ public class GUI
        		}
         }));
 		
+		/*(Lucinda)*/
 	    //Exit Game
 		gameMenu.add(new JMenuItem(new AbstractAction("Exit"){
 			public void actionPerformed(ActionEvent e)
@@ -179,15 +185,16 @@ public class GUI
 		helpMenu.add(new JMenuItem("Tutorial"));
 	}
 	
-    	private String getFileExtension(File file)
+	/*(Shenwei)*/
+    private String getFileExtension(File file)
 	{
-        	System.out.println("\nEnter getFileExtension()");
-        	String ext = "";
-        	System.out.println(file.getName());
-       	 	String name = file.getName();
-        	System.out.println("last index of: "+name.lastIndexOf("."));
-        	ext = name.substring(name.lastIndexOf(".")+1);
-        	System.out.println("Return: "+ext);
-        	return ext;
-    	}
+       	System.out.println("\nEnter getFileExtension()");
+      	String ext = "";
+       	System.out.println(file.getName());
+     	String name = file.getName();
+       	System.out.println("last index of: "+name.lastIndexOf("."));
+       	ext = name.substring(name.lastIndexOf(".")+1);
+       	System.out.println("Return: "+ext);
+       	return ext;
+    }
 }

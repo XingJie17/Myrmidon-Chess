@@ -2,7 +2,7 @@
 
 import java.awt.Color;
 import java.util.ArrayList;
-
+/*(Shen Wei,Jeff)*/	
 public class Triangle extends Piece {
     private String type;
     private String color;

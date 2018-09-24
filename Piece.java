@@ -1,7 +1,7 @@
 //package myrmidonChess;
 
 import java.util.ArrayList;
-
+/*(Jeff, Shen wei)*/
 public abstract class Piece {
     //private String type;
     //private String color;
