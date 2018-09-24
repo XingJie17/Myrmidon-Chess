@@ -85,9 +85,6 @@ public class GUI
 		 	{
                 		JFileChooser fs = new JFileChooser(new File("c:\\"));
                 		fs.setDialogTitle("Save Game");
-                		FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Text file (*.txt)", ".txt");
-                		fs.addChoosableFileFilter(txtFilter);
-                		fs.setFileFilter(txtFilter);
                 		int result = fs.showSaveDialog(null);
                 		if(result == JFileChooser.APPROVE_OPTION)
 				{

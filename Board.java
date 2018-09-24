@@ -172,15 +172,6 @@ public final class Board extends JPanel{
 												JOptionPane.showMessageDialog(f,"Red Won!");
 												break;
 										}
-										//int n=JOptionPane.showConfirmDialog(f,"Would you like to exit the game?");
-										//if(n==JOptionPane.YES_OPTION)
-										//{
-											//System.exit(0);
-											
-										//}
-										//pop up a message to ask whether to start a new game or exit game?
-										//problem:after ok: what to do? 
-										//initialize the board color,
 										eatenPiece.clear();
 										setEatenPieceFromBoard();
 										turn = 0;
@@ -245,7 +236,7 @@ public final class Board extends JPanel{
 	        return null;
 	    }
 	}
-	
+	// <Phatcharawat Chaemchoy>	
 	/* initialize and display pieces */
 	public static void initialPosition()
 	{
@@ -278,6 +269,7 @@ public final class Board extends JPanel{
 		setPiece();
 		
 	}
+	// </Phatcharawat Chaemchoy>
 	
 	/* Set the Board color (alternating black and white grid) */
 	private static void resetBoardColor()
@@ -377,6 +369,7 @@ public final class Board extends JPanel{
 	}
     public static void loadGame(String text)
 	{
+		resetBoardColor();
 		System.out.println("_______________from loadGame()_______________");
         ArrayList<Piece> loadGameArrayList = new ArrayList<Piece>();
 	  
@@ -387,39 +380,41 @@ public final class Board extends JPanel{
         int c = 0;
 		eatenPiece.clear();
 		String turnTemp = "";
+		boolean turnFound = false;
         for(int i = 0; i<text.length();)
 		{
-          
+
             int j = i + 1;
+          	System.out.println(text.substring(i,j));
             if(text.substring(i,j).equals("R"))
 			{
                 int k = i+3;
                 color = text.substring(i,k);
-				System.out.print(count+".");
-                System.out.print(color);
+				//System.out.print(count+".");
+                //System.out.print(color);
                 i = k;
             }
             else if (text.substring(i,j).equals("B"))
 			{
                 int k = i+4;
                 color = text.substring(i,k);
-				System.out.print(count+".");
-                System.out.print(color);
+				//System.out.print(count+".");
+                //System.out.print(color);
                 i = k;
             }
             else if (text.substring(i,j).equals("W"))
 			{
                 int k = i+5;
                 color = text.substring(i,k);
-                System.out.print(count+".");
-                System.out.print(color);
+                //System.out.print(count+".");
+                //System.out.print(color);
                 i = k;
             }
             else if (text.substring(i,j).equals("E"))
 			{
                 int k = i+5;
                 type = text.substring(i,k);
-                System.out.println(type);
+                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -427,7 +422,7 @@ public final class Board extends JPanel{
 			{
                 int k = i+4;
                 type = text.substring(i,k);
-                System.out.println(type);
+                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -435,7 +430,7 @@ public final class Board extends JPanel{
 			{
                 int k = i+8;
                 type = text.substring(i,k);
-                System.out.println(type);
+                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -443,7 +438,7 @@ public final class Board extends JPanel{
 			{
                 int k = i+7;
                 type = text.substring(i,k);
-                System.out.println(type);
+                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -451,7 +446,7 @@ public final class Board extends JPanel{
 			{
                 int k = i+3;
                 type = text.substring(i,k);
-                System.out.println(type);
+                //System.out.println(type);
 				count++;
                 i = k;
             }
@@ -459,34 +454,36 @@ public final class Board extends JPanel{
 			{
                if(!text.substring(i,j).equals(","))
 			   { 
-				turnTemp = turnTemp + text.substring(i,j);
+				   turnTemp = turnTemp + text.substring(i,j);
+				   int ii = i + 1;
+				   int jj = ii + 1;
+				   if(!text.substring(ii,jj).equals(",")&&!text.substring(ii,jj).equals("R")&&!text.substring(ii,jj).equals("B")&&!text.substring(ii,jj).equals("W")){
+					   turnTemp = turnTemp + text.substring(ii,jj);
+				   }
+				   turnFound = true;
+				   i++;
 			   }
-			   else
+			   else if(turnFound == false)
 			   {
-				   System.out.println(text.substring(i,j));
-			   }
-			   if(turnTemp.equals(""))
-			   {
-				 pieceManager[r][c++] = pieceFactory.createPiece(type,color);  
-                if(c==7)
-				{
-                    c = 0;
-                    r++;
-                }
-				int x = j;
-				int y = x + 1;
-			   }
-			   else
-			   {
-				   eatenPiece.add(pieceFactory.createPiece(type,color));
-			   }
-			   i++;
-			   
+					System.out.println("Add to PieceManager: "+color+" "+type);
+					pieceManager[r][c++] = pieceFactory.createPiece(type,color);  
+					if(c==7)
+					{
+    	                c = 0;
+    	                r++;
+    	            }
+				}
+				else
+			    {
+					System.out.println("Add to Eaten: "+color+" "+type);
+					eatenPiece.add(pieceFactory.createPiece(type,color));
+				}
+				i++;
             }
-        }
+		}
 		turn = Integer.parseInt(turnTemp);
+		System.out.println("---- Break point ----");
         setPiece();
-        turn = 0;
         setTurnFromBoard();
         availableBtn.clear();
         //eatenPiece.clear();
