@@ -119,21 +119,21 @@ public class GUI
 				{
               		File file = fc.getSelectedFile();
                     String text = ""; 
-                try
-				{
-                    System.out.println("Filename: "+file.getName());
-                    System.out.println("File path: "+file.getPath());
-                    Scanner s = new Scanner(new File(file.getPath()));
-                    while(s.hasNext())
+    	            try
 					{
-                        text = text + s.next();
-                    }
-                    Board.loadGame(text);
-                } 
-				catch (Exception e2)
-				{
-					JOptionPane.showMessageDialog(null,"Error: "+ e2.getMessage());
-                  	}
+   		                System.out.println("Filename: "+file.getName());
+    	                System.out.println("File path: "+file.getPath());
+  		                Scanner s = new Scanner(new File(file.getPath()));
+   		                while(s.hasNext())
+						{
+    	                    text = text + s.next();
+    	                }
+                    	Board.loadGame(text);
+                	} 
+					catch (Exception e2)
+					{
+						JOptionPane.showMessageDialog(null,"Error: "+ e2.getMessage());
+                	}
                	}
            	}
         }));
