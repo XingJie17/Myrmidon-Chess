@@ -50,7 +50,7 @@ public class GUI
 		
 	    	// Create a split pane
 	   	JSplitPane splitPane = new JSplitPane();
-	    	frame.getContentPane().add(splitPane);
+	    frame.getContentPane().add(splitPane);
 		
 	    	// Adjust splitPane;
 	   	splitPane.setResizeWeight(0.5);
@@ -58,114 +58,110 @@ public class GUI
             	splitPane.setLeftComponent(Board.insertPanel());
 		
 	    	// Insert player and game information to the right of split pane
-	        // ******** TO-DO ********
-	    	// THIS IS JUST A STUB //
 	    	splitPane.setRightComponent(GameInfo.insertGameInfoPanel());
-	   	// THIS IS JUST A STUB //
-	   	// ******** TO-DO ********
 		
 	   	// Insert JMenuBar
-	    	JMenuBar menuBar = new JMenuBar();
+	    JMenuBar menuBar = new JMenuBar();
 	   	frame.setJMenuBar(menuBar);
 	   	JMenu gameMenu = new JMenu("Game");
 		menuBar.add(gameMenu);
 	    
-	    	//New Game 
-	    	gameMenu.add(new JMenuItem(new AbstractAction("New Game"){
+	    //New Game 
+	    gameMenu.add(new JMenuItem(new AbstractAction("New Game"){
 			public void actionPerformed(ActionEvent e)
 			{
 		   		Board.initialPosition();	
 		   	 	GameInfo.newGame();
 			}	
-	    	}));
+	    }));
 		
 		//Save Game
-	     	gameMenu.add(new JMenuItem(new AbstractAction("Save Game"){
+	    gameMenu.add(new JMenuItem(new AbstractAction("Save Game"){
 			 public void actionPerformed(ActionEvent e)
 		 	{
-                		JFileChooser fs = new JFileChooser(new File("c:\\"));
-                		fs.setDialogTitle("Save Game");
-                		int result = fs.showSaveDialog(null);
-                		if(result == JFileChooser.APPROVE_OPTION)
+                JFileChooser fs = new JFileChooser(new File("c:\\"));
+                fs.setDialogTitle("Save Game");
+                int result = fs.showSaveDialog(null);
+                if(result == JFileChooser.APPROVE_OPTION)
 				{
-                    			String content = Board.saveGame();
+                	String content = Board.saveGame();
 					File fi = fs.getSelectedFile();
-                   	 		String fiExt = getFileExtension(fi);
-                    			System.out.println(fiExt);
-                    			if(!fiExt.equals("txt"))
+                  	String fiExt = getFileExtension(fi);
+                  	System.out.println(fiExt);
+                  	if(!fiExt.equals("txt"))
 					{
-                        			fi = new File(fi.toString()+".txt");
-                   	 		}
-                   			try
+                    	fi = new File(fi.toString()+".txt");
+                   	}
+                   	try
 					{
-                        			FileWriter fw = new FileWriter(fi.getPath());
-                        			fw.write(content);
-                        			fw.flush();
-                        			fw.close();
-                   			}
+                    	FileWriter fw = new FileWriter(fi.getPath());
+                    	fw.write(content);
+                    	fw.flush();
+                    	fw.close();
+                   	}
 					catch(Exception e2)
 					{
-                       		 		JOptionPane.showMessageDialog(null, e2.getMessage());
-                    	  		}
-                  		}
-               	   	}
+                    	JOptionPane.showMessageDialog(null, e2.getMessage());
+                    }
+                }
+            }
 		}));
 		
 		//Load Game
-             	gameMenu.add(new JMenuItem(new AbstractAction("Load Game"){
-           	 	public void actionPerformed(ActionEvent e)
+        gameMenu.add(new JMenuItem(new AbstractAction("Load Game"){
+        	public void actionPerformed(ActionEvent e)
 			{
-                		GameInfo.loadGame();
-                		JFileChooser fc = new JFileChooser(new File("c:\\"));
-                		fc.setDialogTitle("Load Game");
-                		int response = fc.showOpenDialog(null);
-               			if(response == JFileChooser.APPROVE_OPTION)
+            	GameInfo.loadGame();
+            	JFileChooser fc = new JFileChooser(new File("c:\\"));
+            	fc.setDialogTitle("Load Game");
+            	int response = fc.showOpenDialog(null);
+            	if(response == JFileChooser.APPROVE_OPTION)
 				{
-                    			File file = fc.getSelectedFile();
-                    			String text = ""; 
-                    			try
+              		File file = fc.getSelectedFile();
+                    String text = ""; 
+                try
+				{
+                    System.out.println("Filename: "+file.getName());
+                    System.out.println("File path: "+file.getPath());
+                    Scanner s = new Scanner(new File(file.getPath()));
+                    while(s.hasNext())
 					{
-                        			System.out.println("Filename: "+file.getName());
-                       				System.out.println("File path: "+file.getPath());
-                        			Scanner s = new Scanner(new File(file.getPath()));
-                       				while(s.hasNext())
-						{
-                            				text = text + s.next();
-                        			}
-                        			Board.loadGame(text);
-                   	       		} 
-					catch (Exception e2)
-					{
-						JOptionPane.showMessageDialog(null,"Error: "+ e2.getMessage());
-                   			}
-               			}
-           		 }
-        	}));
+                        text = text + s.next();
+                    }
+                    Board.loadGame(text);
+                } 
+				catch (Exception e2)
+				{
+					JOptionPane.showMessageDialog(null,"Error: "+ e2.getMessage());
+                  	}
+               	}
+           	}
+        }));
 		
 		//Resign Game
 		gameMenu.add(new JMenuItem(new AbstractAction("Resign"){
-            		public void actionPerformed(ActionEvent e)
+            public void actionPerformed(ActionEvent e)
 			{
 			   int button = JOptionPane.YES_NO_OPTION;
-               		   int dialogResult = JOptionPane.showConfirmDialog(null, GameInfo.getCurrentTurn()+": resign?");
-               		   if(dialogResult == JOptionPane.YES_OPTION)
-			   {
-                   		 switch(GameInfo.getCurrentTurn())
-				 {
-                        		case "Red":
-                           			JOptionPane.showMessageDialog(frame, "BLUE WON!"); 
-                            			break;
-                       			case "Blue":
-                            			JOptionPane.showMessageDialog(frame, "RED WON!"); 
-                            			break;
-                    		}	
-                   		Board.initialPosition();
-				GameInfo.newGame();
-			   }
-           		}
-        	}));
+               	int dialogResult = JOptionPane.showConfirmDialog(null, GameInfo.getCurrentTurn()+": resign?");
+               	if(dialogResult == JOptionPane.YES_OPTION)
+			   	{
+                   	switch(GameInfo.getCurrentTurn())
+				 	{
+                    	case "Red":
+                    		JOptionPane.showMessageDialog(frame, "BLUE WON!"); 
+                            break;
+                       	case "Blue":
+                        	JOptionPane.showMessageDialog(frame, "RED WON!"); 
+                        	break;
+                    }	
+                   	Board.initialPosition();
+					GameInfo.newGame();
+			 	}
+       		}
+        }));
 		
-	        //Exit Game
+	    //Exit Game
 		gameMenu.add(new JMenuItem(new AbstractAction("Exit"){
 			public void actionPerformed(ActionEvent e)
 			{
